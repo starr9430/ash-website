@@ -6,6 +6,12 @@ function ClutchVisual() {
 
   return (
     <div className="clutch-visual" aria-hidden="true">
+      <img
+        className="hero-product-photo"
+        src="/images/products/hero-clutch.webp"
+        alt=""
+        onError={(event) => { event.currentTarget.style.display = 'none' }}
+      />
       <div className="visual-wash" />
       <svg viewBox="0 0 760 560" className="clutch-svg" role="presentation">
         <defs>
@@ -39,28 +45,9 @@ function ClutchVisual() {
           </filter>
         </defs>
 
-        <path
-          d="M54 427C190 393 190 238 340 182c119-45 263-13 377 45"
-          fill="none"
-          stroke="url(#cvWater)"
-          strokeWidth="26"
-          strokeLinecap="round"
-          opacity=".88"
-        />
-        <path
-          d="M78 454C238 382 247 285 373 237c114-42 227-34 311 15"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="7"
-          strokeLinecap="round"
-          opacity=".62"
-        />
-
-        <path
-          d="M128 140c75-79 170-99 247-63-48 22-82 59-109 109-43 81-91 111-165 116 3-55 12-102 27-162Z"
-          fill="url(#cvLeaf)"
-          opacity=".96"
-        />
+        <path d="M54 427C190 393 190 238 340 182c119-45 263-13 377 45" fill="none" stroke="url(#cvWater)" strokeWidth="26" strokeLinecap="round" opacity=".88" />
+        <path d="M78 454C238 382 247 285 373 237c114-42 227-34 311 15" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" opacity=".62" />
+        <path d="M128 140c75-79 170-99 247-63-48 22-82 59-109 109-43 81-91 111-165 116 3-55 12-102 27-162Z" fill="url(#cvLeaf)" opacity=".96" />
         <path d="M151 286C216 229 274 160 329 88" fill="none" stroke="#dbe4d9" strokeWidth="2" opacity=".82" />
 
         <g filter="url(#cvShadow)">
@@ -70,7 +57,6 @@ function ClutchVisual() {
           <circle cx="330" cy="274" r="102" fill="none" stroke="#a6aaa4" strokeWidth="4" opacity=".62" />
           <circle cx="330" cy="274" r="47" fill="url(#cvMetal2)" />
           <circle cx="330" cy="274" r="24" fill="#303530" />
-
           {Array.from({ length: 18 }, (_, i) => {
             const a = (Math.PI * 2 * i) / 18
             const x1 = 330 + Math.cos(a) * 55
@@ -79,7 +65,6 @@ function ClutchVisual() {
             const y2 = 274 + Math.sin(a) * 122
             return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#d9dad4" strokeWidth="4" opacity=".78" strokeLinecap="round" />
           })}
-
           {bolts.map((b, i) => <circle key={i} cx={b.x} cy={b.y} r="8" fill="#5d625d" stroke="#e6e6df" strokeWidth="2" />)}
           <circle cx="330" cy="274" r="197" fill="none" stroke="#f1f0e9" strokeWidth="1.5" opacity=".72" />
         </g>
