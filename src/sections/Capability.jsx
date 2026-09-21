@@ -1,10 +1,10 @@
 import ProductVisual from '../components/ProductVisual'
 
 const products = [
-  { no: '01', name: 'Clutch Cover', type: 'cover', note: 'Pressure plate assembly' },
-  { no: '02', name: 'Driven Disc', type: 'disc', note: 'Friction disc assembly' },
-  { no: '03', name: 'Release Bearing', type: 'bearing', note: 'Release system' },
-  { no: '04', name: 'Related Components', type: 'other', note: 'Application-led sourcing' },
+  { no: '01', name: 'Clutch Cover', type: 'cover', src: '/images/products/clutch-cover.webp', note: 'Pressure plate assembly' },
+  { no: '02', name: 'Driven Disc', type: 'disc', src: '/images/products/driven-disc.webp', note: 'Friction disc assembly' },
+  { no: '03', name: 'Release Bearing', type: 'bearing', src: '/images/products/release-bearing.webp', note: 'Release system' },
+  { no: '04', name: 'Related Components', type: 'other', src: '/images/products/related-components.webp', note: 'Application-led sourcing' },
 ]
 
 function Capability() {
@@ -25,7 +25,7 @@ function Capability() {
         {products.map((item) => (
           <article className="product-card" key={item.no}>
             <div className="product-top"><span>{item.no}</span><span>ASH</span></div>
-            <ProductVisual type={item.type} />
+            <ProductVisual type={item.type} src={item.src} alt={item.name} />
             <div className="product-bottom">
               <div><h3>{item.name}</h3><p>{item.note}</p></div>
               <span>↗</span>
@@ -34,8 +34,28 @@ function Capability() {
         ))}
       </div>
 
+      <div className="packaging-strip">
+        <div className="packaging-copy">
+          <div className="section-kicker">04 / PACKAGING</div>
+          <h2>Made to arrive<br /><em>as ASH.</em></h2>
+          <p>
+            Packaging is part of the product experience — clear identification,
+            restrained graphics and a format built for export handling.
+          </p>
+        </div>
+        <div className="packaging-frame">
+          <img
+            src="/images/packaging/ash-box.webp"
+            alt="ASH clutch packaging"
+            onError={(event) => { event.currentTarget.style.display = 'none' }}
+          />
+          <img className="packaging-texture" src="/assets/brand/ash-leaf.svg" alt="" />
+          <div className="packaging-fallback"><span>ASH</span><small>PACKAGING / 01</small></div>
+        </div>
+      </div>
+
       <div className="capability-panel">
-        <div className="section-kicker">04 / CAPABILITY</div>
+        <div className="section-kicker">05 / CAPABILITY</div>
         <div className="capability-copy">
           <h2>Production discipline.<br /><em>Commercial clarity.</em></h2>
           <p>
