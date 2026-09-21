@@ -1,14 +1,19 @@
 function Intro() {
   return (
     <section className="intro-band" id="solutions">
-      <div className="section-kicker">01 / THE APPROACH</div>
+      <div className="section-kicker">01 / THE ASH APPROACH</div>
       <div className="intro-grid">
-        <h2>Not a parts catalogue.<br /><em>A practical sourcing partner.</em></h2>
-        <p>
-          ASH is built for buyers who need the right clutch application without
-          unnecessary noise. We work from vehicle demand, application fit and
-          production capability — then build the right combination around the job.
-        </p>
+        <h2>Nature gives the direction.<br /><em>Engineering gives it form.</em></h2>
+        <div>
+          <p>
+            ASH is an export-focused clutch brand built around a simple idea:
+            make sourcing easier without making the product feel ordinary.
+          </p>
+          <p className="intro-small">
+            We start from application demand, then combine references, production
+            capability and practical quantities into a range that works in the real world.
+          </p>
+        </div>
       </div>
     </section>
   )
