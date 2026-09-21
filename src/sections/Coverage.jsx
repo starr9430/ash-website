@@ -1,7 +1,7 @@
 const items = [
-  { no: "01", title: "Passenger vehicles", text: "Broad manual-clutch coverage across mainstream passenger applications." },
-  { no: "02", title: "Light commercial", text: "Practical coverage for pickups, vans and light-duty work vehicles." },
-  { no: "03", title: "Commercial vehicles", text: "A strong production base shaped by commercial-vehicle applications." },
+  { no: "01", title: "Passenger vehicles", tag: "DAILY / MAINSTREAM", text: "Broad manual-clutch coverage for the applications that move everyday markets." },
+  { no: "02", title: "Light commercial", tag: "PICKUP / VAN", text: "Practical clutch coverage for pickups, vans and light-duty working vehicles." },
+  { no: "03", title: "Commercial vehicles", tag: "WORK / LOAD", text: "A production base shaped by commercial-vehicle applications and real operating demands." },
 ]
 
 function Coverage() {
@@ -9,17 +9,20 @@ function Coverage() {
     <section className="coverage-section" id="coverage">
       <div className="section-heading">
         <div>
-          <div className="section-kicker">02 / COVERAGE</div>
-          <h2>One source.<br /><em>Wider application.</em></h2>
+          <div className="section-kicker">02 / APPLICATION COVERAGE</div>
+          <h2>One range.<br /><em>Many roads.</em></h2>
         </div>
-        <p>Designed around the way importers and distributors actually buy: mixed applications, clear references, practical quantities.</p>
+        <p>Built for mixed procurement: clear references, practical quantities and a range that can grow with the market.</p>
       </div>
 
       <div className="coverage-list">
         {items.map((item) => (
           <article className="coverage-item" key={item.no}>
             <span className="coverage-no">{item.no}</span>
-            <h3>{item.title}</h3>
+            <div className="coverage-title">
+              <h3>{item.title}</h3>
+              <span>{item.tag}</span>
+            </div>
             <p>{item.text}</p>
             <span className="coverage-arrow">↗</span>
           </article>
