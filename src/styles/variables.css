@@ -1,34 +1,15 @@
 :root {
-  /* ASH Visual System v0.1 */
-  --ash-paper: #eeece6;
-  --ash-paper-light: #f8f7f3;
-  --ash-paper-dark: #e3e0d8;
-
-  --ash-ink: #1d201d;
-  --ash-ink-soft: #5d615c;
-
-  --ash-metal: #969b95;
-  --ash-metal-light: #d1d1ca;
-
-  --ash-moss: #657066;
-  --ash-moss-light: #aab5aa;
-  --ash-petrol: #173b45;
-  --ash-petrol-soft: #2f5f68;
-
-  --ash-serif: Georgia, 'Times New Roman', serif;
-  --ash-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-
-  --ash-line: rgba(29, 32, 29, 0.14);
-  --ash-line-light: rgba(248, 247, 243, 0.2);
-
-  --space-xs: 8px;
-  --space-s: 16px;
-  --space-m: 24px;
-  --space-l: 40px;
-  --space-xl: 64px;
-  --space-2xl: 96px;
-  --space-3xl: 150px;
-
-  --content-width: 1400px;
-  --page-gutter: 24px;
+  --ash-paper: #e9e6dd;
+  --ash-paper-light: #f5f3ec;
+  --ash-paper-dark: #dedbd1;
+  --ash-ink: #18201b;
+  --ash-ink-soft: #60665f;
+  --ash-metal: #8d948e;
+  --ash-metal-light: #d5d6cf;
+  --ash-moss: #4c7058;
+  --ash-moss-light: #9aae9b;
+  --ash-petrol: #244f59;
+  --ash-line: rgba(24, 32, 27, .15);
+  --ash-line-light: rgba(245, 243, 236, .19);
+  --ash-content: 1400px;
 }
