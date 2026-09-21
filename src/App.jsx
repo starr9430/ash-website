@@ -1,15 +1,24 @@
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Hero from './sections/Hero'
+import Intro from './sections/Intro'
+import Coverage from './sections/Coverage'
+import Capability from './sections/Capability'
+import Contact from './sections/Contact'
+
 function App() {
   return (
-    <main>
-      <section className="hero">
-        <p className="eyebrow">ASH / GLOBAL CLUTCH SOLUTIONS</p>
-        <h1>Clutch solutions,<br />built for the road ahead.</h1>
-        <p className="intro">
-          A focused B2B clutch brand delivering dependable coverage for
-          passenger cars and commercial vehicles.
-        </p>
-      </section>
-    </main>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Intro />
+        <Coverage />
+        <Capability />
+        <Contact />
+      </main>
+      <Footer />
+    </>
   )
 }
 
