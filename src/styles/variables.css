@@ -1,12 +1,29 @@
 :root {
+  /* ASH Visual System v0.1 */
+  --ash-paper: #eeece6;
+  --ash-paper-light: #f8f7f3;
+  --ash-paper-dark: #e3e0d8;
+
   --ash-ink: #1d201d;
   --ash-ink-soft: #5d615c;
-  --ash-stone: #eeece6;
-  --ash-stone-dark: #e3e0d8;
+
   --ash-metal: #969b95;
   --ash-metal-light: #d1d1ca;
+
   --ash-moss: #657066;
+  --ash-moss-light: #aab5aa;
+
   --ash-line: rgba(29, 32, 29, 0.14);
-  --ash-white: #f8f7f3;
+  --ash-line-light: rgba(248, 247, 243, 0.2);
+
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 40px;
+  --space-xl: 64px;
+  --space-2xl: 96px;
+  --space-3xl: 150px;
+
   --content-width: 1400px;
+  --page-gutter: 24px;
 }
