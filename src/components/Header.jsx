@@ -13,7 +13,10 @@ function Header() {
       <nav className="nav" aria-label="Primary navigation">
         <a href="#solutions">Approach</a><a href="#coverage">Applications</a><a href="#capability">Products</a>
       </nav>
-      <a className="header-contact" href="#contact">Start a conversation <span>↗</span></a>
+      <div className="header-right">
+        <span className="header-email">hello@ashlira.com</span>
+        <a className="header-contact" href="#contact">Start a conversation <span>↗</span></a>
+      </div>
     </header>
   )
 }
