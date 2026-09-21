@@ -1,0 +1,12 @@
+:root {
+  --ash-ink: #1d201d;
+  --ash-ink-soft: #5d615c;
+  --ash-stone: #eeece6;
+  --ash-stone-dark: #e3e0d8;
+  --ash-metal: #969b95;
+  --ash-metal-light: #d1d1ca;
+  --ash-moss: #657066;
+  --ash-line: rgba(29, 32, 29, 0.14);
+  --ash-white: #f8f7f3;
+  --content-width: 1400px;
+}
