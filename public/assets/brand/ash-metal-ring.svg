@@ -1,0 +1,29 @@
+<svg width="900" height="900" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="metal" cx="34%" cy="25%" r="76%">
+      <stop offset="0" stop-color="#E9E8E2"/>
+      <stop offset=".35" stop-color="#C1C3BD"/>
+      <stop offset=".72" stop-color="#929791"/>
+      <stop offset="1" stop-color="#666B66"/>
+    </radialGradient>
+    <radialGradient id="shadow" cx="45%" cy="36%" r="65%">
+      <stop offset="0" stop-color="#252925"/>
+      <stop offset="1" stop-color="#111311"/>
+    </radialGradient>
+  </defs>
+  <circle cx="450" cy="450" r="336" fill="url(#metal)"/>
+  <circle cx="450" cy="450" r="272" fill="none" stroke="#5E635E" stroke-opacity=".58" stroke-width="2"/>
+  <circle cx="450" cy="450" r="205" fill="url(#shadow)"/>
+  <circle cx="450" cy="450" r="106" fill="none" stroke="#AEB2AB" stroke-opacity=".54" stroke-width="3"/>
+  <circle cx="450" cy="450" r="42" fill="#D3D1C9" fill-opacity=".92"/>
+  <circle cx="450" cy="450" r="18" fill="#353934"/>
+  <g fill="#C5C7C0" fill-opacity=".9">
+    <circle cx="578" cy="450" r="8"/><circle cx="514" cy="561" r="8"/><circle cx="386" cy="561" r="8"/>
+    <circle cx="322" cy="450" r="8"/><circle cx="386" cy="339" r="8"/><circle cx="514" cy="339" r="8"/>
+  </g>
+  <g stroke="#F2F0E8" stroke-opacity=".16" stroke-width="1">
+    <path d="M450 125V775M125 450H775"/>
+    <path d="M220 220L680 680M680 220L220 680"/>
+  </g>
+  <circle cx="450" cy="450" r="350" fill="none" stroke="#657066" stroke-opacity=".3"/>
+</svg>
