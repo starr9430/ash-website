@@ -14,59 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Prepare image tools
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pillow opencv-python-headless
-
-      - name: Extract product visual
-        run: |
-          python - <<'PY'
-          import cv2
-          import numpy as np
-          from PIL import Image
-          from pathlib import Path
-
-          src = Path('public/assets/library/originals/website-reference/网站假想图1.png')
-          out = Path('public/assets/library/derived')
-          out.mkdir(parents=True, exist_ok=True)
-
-          img = cv2.imread(str(src), cv2.IMREAD_COLOR)
-          h, w = img.shape[:2]
-          # The approved angled clutch visual sits in the upper/right visual field.
-          x0, y0, x1, y1 = int(w*.42), int(h*.02), int(w*.99), int(h*.78)
-          crop = img[y0:y1, x0:x1]
-          mask = np.zeros(crop.shape[:2], np.uint8)
-          rect = (8, 8, crop.shape[1]-16, crop.shape[0]-16)
-          bgd = np.zeros((1,65), np.float64)
-          fgd = np.zeros((1,65), np.float64)
-          cv2.grabCut(crop, mask, rect, bgd, fgd, 8, cv2.GC_INIT_WITH_RECT)
-          alpha = np.where((mask==cv2.GC_FGD)|(mask==cv2.GC_PR_FGD),255,0).astype(np.uint8)
-          alpha = cv2.GaussianBlur(alpha,(0,0),1.2)
-          rgba = cv2.cvtColor(crop, cv2.COLOR_BGR2BGRA)
-          rgba[:,:,3] = alpha
-          Image.fromarray(cv2.cvtColor(rgba, cv2.COLOR_BGRA2RGBA)).save(out/'ash-angled-clutch-reference.png', optimize=True)
-          Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)).save(out/'ash-angled-clutch-source-crop.jpg', quality=95)
-          print('source:', w, h, 'crop:', crop.shape[1], crop.shape[0])
-          PY
-
-      - name: Commit derived visual assets
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add public/assets/library/derived
-          git commit -m 'Extract ASH angled clutch visual asset' || echo 'No changes'
-          git push
-
-
-      - name: Extract final website artwork
+        run: python -m pip install pillow
+      - name: Generate final website artwork
         run: |
           python - <<'PY'
           from PIL import Image
           from pathlib import Path
           src=Path('public/assets/library/originals/website-reference/网站假想图1.png')
           out=Path('public/assets/library/derived')
+          out.mkdir(parents=True, exist_ok=True)
           im=Image.open(src).convert('RGB')
           im.crop((500,78,1536,533)).save(out/'ash-hero-artwork.png', optimize=True)
           im.crop((474,692,711,918)).save(out/'ash-product-cover-card.png', optimize=True)
@@ -74,18 +31,18 @@ jobs:
           im.crop((968,692,1201,918)).save(out/'ash-product-bearing-card.png', optimize=True)
           im.crop((1212,692,1446,918)).save(out/'ash-product-components-card.png', optimize=True)
           PY
-          git add public/assets/library/derived
+      - name: Remove obsolete derived assets
+        run: |
+          rm -f public/assets/library/derived/ash-angled-clutch-reference.png
+          rm -f public/assets/library/derived/ash-angled-clutch-source-crop.jpg
+          rm -f public/assets/library/derived/hero-candidate-a.png
+          rm -f public/assets/library/derived/hero-candidate-b.png
+          rm -f public/assets/library/derived/hero-candidate-c.png
+          rm -f public/assets/library/derived/hero-candidates-contact-sheet.jpg
+      - name: Commit derived assets
+        run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Add final ASH website artwork crops' || echo 'No changes'
+          git add -A public/assets/library/derived
+          git commit -m 'Keep only final ASH website artwork assets' || echo 'No changes'
           git push
-
-      - name: Upload reference material
-        uses: actions/upload-artifact@v4
-        with:
-          name: ash-reference-material
-          path: |
-            public/assets/library/originals/website-reference/网站假想图1.png
-            public/assets/library/derived/ash-angled-clutch-reference.png
-            public/assets/library/derived/ash-angled-clutch-source-crop.jpg
-# Keep derived asset generation anchored to current main.
