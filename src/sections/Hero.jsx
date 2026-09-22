@@ -1,25 +1,20 @@
-import ClutchVisual from '../components/ClutchVisual'
-
 function Hero() {
   return (
-    <section className="hero-section" id="top">
+    <section className="hero" id="top">
       <div className="hero-copy">
-        <p className="eyebrow">ASH / GLOBAL CLUTCH SOLUTIONS</p>
-        <h1>Precision that<br /><em>moves.</em></h1>
-        <p className="hero-text">
-          Application-led clutch solutions for importers and distributors —
-          built around fit, consistency and practical range building.
+        <img className="hero-logo" src="/assets/library/brand/ash-logo-approved.png" alt="ASH" />
+        <p className="hero-product-name">CLUTCH KIT</p>
+        <div className="hero-rule" />
+        <p className="hero-eyebrow">PRECISION IN MOTION</p>
+        <p className="hero-description">
+          Reliable clutch solutions for a smoother, stronger journey.
         </p>
-        <div className="hero-actions">
-          <a className="button button-primary" href="#coverage">Explore applications <span>↗</span></a>
-          <a className="text-link" href="#contact">Talk to ASH <span>→</span></a>
-        </div>
-        <div className="hero-note">
-          <span>PASSENGER / LCV / COMMERCIAL</span>
-          <span>EST. 2026</span>
-        </div>
+        <a className="hero-button" href="#products">Explore Products <span>→</span></a>
       </div>
-      <ClutchVisual />
+
+      <div className="hero-art">
+        <img src="/assets/library/derived/ash-hero-artwork.png" alt="" />
+      </div>
     </section>
   )
 }
