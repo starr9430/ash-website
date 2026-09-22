@@ -1,10 +1,10 @@
 import ProductVisual from '../components/ProductVisual'
 
 const products = [
-  { no: '01', name: 'Clutch Cover', type: 'cover', src: '/assets/library/products/clutch-cover-01.jpg', note: 'Pressure plate assembly' },
-  { no: '02', name: 'Driven Disc', type: 'disc', src: '/assets/library/products/clutch-disc-01.png', note: 'Friction disc assembly' },
-  { no: '03', name: 'Release Bearing', type: 'bearing', src: '/assets/library/products/release-bearing-01.png', note: 'Release system' },
-  { no: '04', name: 'Related Components', type: 'other', src: '/assets/library/products/related-components-01.png', note: 'Application-led sourcing' },
+  { no: '01', name: 'Clutch Assembly', type: 'cover', src: '/assets/library/originals/products/产品实拍照.png', note: 'Real ASH product reference' },
+  { no: '02', name: 'Application Range', type: 'disc', src: '', note: 'Passenger / LCV / commercial' },
+  { no: '03', name: 'Reference Matching', type: 'bearing', src: '', note: 'Vehicle-led sourcing' },
+  { no: '04', name: 'Range Building', type: 'other', src: '', note: 'Mixed procurement support' },
 ]
 
 function Capability() {
@@ -45,8 +45,8 @@ function Capability() {
         </div>
         <div className="packaging-frame">
           <img
-            src="/assets/library/packaging/ash-clutch-kit-box-01.webp"
-            alt="ASH clutch kit packaging"
+            src="/assets/library/originals/packaging/纸盒初稿3.png"
+            alt="ASH clutch packaging concept"
           />
           <div className="packaging-label">ASH / CLUTCH KIT</div>
         </div>
