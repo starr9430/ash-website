@@ -1,8 +1,8 @@
 const features = [
-  { icon: '01', title: 'HIGH RELIABILITY', text: <>Stable performance in<br />real-world applications.</> },
-  { icon: '02', title: 'MATERIAL FOCUS', text: <>Product materials selected<br />for application requirements.</> },
-  { icon: '03', title: 'WIDE COVERAGE', text: <>Passenger, pickup, LCV<br />and commercial vehicles.</> },
-  { icon: '04', title: 'GLOBAL SUPPLY', text: <>Built for importers,<br />distributors and workshops.</> },
+  { icon: '01', title: 'APPLICATION-LED', text: <>Start from the vehicle,<br />reference and market need.</> },
+  { icon: '02', title: 'MATERIAL FOCUS', text: <>Product choices follow<br />the application requirement.</> },
+  { icon: '03', title: 'RANGE BUILDING', text: <>Combine references into<br />a workable sourcing range.</> },
+  { icon: '04', title: 'EXPORT-MINDED', text: <>Built for importers,<br />distributors and workshops.</> },
 ]
 
 function FeatureStrip() {
