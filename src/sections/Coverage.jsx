@@ -1,30 +1,34 @@
-const items = [
-  { no: "01", title: "Passenger vehicles", tag: "DAILY / MAINSTREAM", text: "Broad manual-clutch coverage for the applications that move everyday markets." },
-  { no: "02", title: "Light commercial", tag: "PICKUP / VAN", text: "Practical clutch coverage for pickups, vans and light-duty working vehicles." },
-  { no: "03", title: "Commercial vehicles", tag: "WORK / LOAD", text: "A production base shaped by commercial-vehicle applications and real operating demands." },
+const products = [
+  { image: '/assets/library/derived/ash-product-cover-card.png', title: 'Clutch Cover', subtitle: 'PRESSURE PLATE ASSEMBLY' },
+  { image: '/assets/library/derived/ash-product-disc-card.png', title: 'Driven Disc', subtitle: 'FRICTION DISC' },
+  { image: '/assets/library/derived/ash-product-bearing-card.png', title: 'Release Bearing', subtitle: 'RELEASE SYSTEM' },
+  { image: '/assets/library/derived/ash-product-components-card.png', title: 'Other Components', subtitle: 'SUPPORTING PARTS' },
 ]
 
 function Coverage() {
   return (
-    <section className="coverage-section" id="coverage">
-      <div className="section-heading">
-        <div>
-          <div className="section-kicker">02 / APPLICATION COVERAGE</div>
-          <h2>One range.<br /><em>Many roads.</em></h2>
+    <section className="products-section" id="products">
+      <div className="products-intro">
+        <p className="section-label">PRODUCTS</p>
+        <div className="products-title-row">
+          <span />
+          <h2>Complete Clutch Solutions<br />for Your Fleet</h2>
         </div>
-        <p>Built for mixed procurement: clear references, practical quantities and a range that can grow with the market.</p>
+        <p className="products-copy">
+          From passenger cars to commercial vehicles, ASH provides a practical range of clutch components to meet diverse market needs.
+        </p>
+        <a className="products-link" href="#contact">View All Products <span>→</span></a>
       </div>
 
-      <div className="coverage-list">
-        {items.map((item) => (
-          <article className="coverage-item" key={item.no}>
-            <span className="coverage-no">{item.no}</span>
-            <div className="coverage-title">
-              <h3>{item.title}</h3>
-              <span>{item.tag}</span>
+      <div className="product-grid">
+        {products.map((item) => (
+          <article className="product-card" key={item.title}>
+            <div className="product-image">
+              <img src={item.image} alt="" />
             </div>
-            <p>{item.text}</p>
-            <span className="coverage-arrow">↗</span>
+            <h3>{item.title}</h3>
+            <p>{item.subtitle}</p>
+            <span className="product-arrow">→</span>
           </article>
         ))}
       </div>
