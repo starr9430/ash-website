@@ -59,6 +59,27 @@ jobs:
           git commit -m 'Extract ASH angled clutch visual asset' || echo 'No changes'
           git push
 
+
+      - name: Extract final website artwork
+        run: |
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          src=Path('public/assets/library/originals/website-reference/网站假想图1.png')
+          out=Path('public/assets/library/derived')
+          im=Image.open(src).convert('RGB')
+          im.crop((500,78,1536,533)).save(out/'ash-hero-artwork.png', optimize=True)
+          im.crop((474,692,711,918)).save(out/'ash-product-cover-card.png', optimize=True)
+          im.crop((723,692,956,918)).save(out/'ash-product-disc-card.png', optimize=True)
+          im.crop((968,692,1201,918)).save(out/'ash-product-bearing-card.png', optimize=True)
+          im.crop((1212,692,1446,918)).save(out/'ash-product-components-card.png', optimize=True)
+          PY
+          git add public/assets/library/derived
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Add final ASH website artwork crops' || echo 'No changes'
+          git push
+
       - name: Upload reference material
         uses: actions/upload-artifact@v4
         with:
