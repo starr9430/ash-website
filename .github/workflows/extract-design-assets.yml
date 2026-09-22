@@ -68,8 +68,10 @@ jobs:
           git commit -m "Extract ASH hero reference candidates" || echo "No changes"
           git push
 
-      - name: Upload candidate sheet
+      - name: Upload reference material
         uses: actions/upload-artifact@v4
         with:
-          name: ash-hero-candidates
-          path: public/assets/library/derived/hero-candidates-contact-sheet.jpg
+          name: ash-reference-material
+          path: |
+            public/assets/library/originals/website-reference/网站假想图1.png
+            public/assets/library/derived/hero-candidates-contact-sheet.jpg
