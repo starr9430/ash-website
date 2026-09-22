@@ -1,0 +1,60 @@
+name: Organize ASH Original Assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/organize-original-assets.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  organize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Move original image assets
+        run: |
+          set -e
+          mkdir -p public/assets/library/originals/products
+          mkdir -p public/assets/library/originals/packaging
+          mkdir -p public/assets/library/originals/brand
+          mkdir -p public/assets/library/originals/website-reference
+
+          if [ -f "public/assets/library/originals/产品实拍照.png" ]; then
+            git mv "public/assets/library/originals/产品实拍照.png" "public/assets/library/originals/products/产品实拍照.png"
+          fi
+
+          if [ -f "public/assets/library/originals/纸盒初稿3.png" ]; then
+            git mv "public/assets/library/originals/纸盒初稿3.png" "public/assets/library/originals/packaging/纸盒初稿3.png"
+          fi
+
+          if [ -f "public/assets/library/originals/网站假想图1.png" ]; then
+            git mv "public/assets/library/originals/网站假想图1.png" "public/assets/library/originals/website-reference/网站假想图1.png"
+          fi
+
+          if [ -f "public/assets/library/originals/网站假想图2.png" ]; then
+            git mv "public/assets/library/originals/网站假想图2.png" "public/assets/library/originals/website-reference/网站假想图2.png"
+          fi
+
+          if [ -f "public/assets/library/originals/网站素材.png" ]; then
+            git mv "public/assets/library/originals/网站素材.png" "public/assets/library/originals/website-reference/网站素材.png"
+          fi
+
+          printf '%s\n' '# ASH Original Image Library' '' 'This folder is the long-term source library for original ASH image assets.' '' '## Folders' '- products/ — original product photographs' '- packaging/ — original packaging photographs and drafts' '- brand/ — original brand/logo image files' '- website-reference/ — website visual references, mockups and art-direction images' '' 'Keep original JPG/JPEG/PNG files here. Website-optimized WebP derivatives should live outside this original source library.' > public/assets/library/originals/README.md
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Organize original ASH image assets"
+          git push
