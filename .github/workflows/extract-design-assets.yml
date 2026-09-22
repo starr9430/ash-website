@@ -88,3 +88,4 @@ jobs:
             public/assets/library/originals/website-reference/网站假想图1.png
             public/assets/library/derived/ash-angled-clutch-reference.png
             public/assets/library/derived/ash-angled-clutch-source-crop.jpg
+# Keep derived asset generation anchored to current main.
