@@ -13,6 +13,11 @@ function ClutchVisual() {
         src="/images/brand/leaf-vein.svg"
         alt=""
       />
+      <img
+        className="hero-nature hero-ring"
+        src="/images/brand/mechanical-ring.svg"
+        alt=""
+      />
 
       <div className="hero-photo-frame">
         <img
