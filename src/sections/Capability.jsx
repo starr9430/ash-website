@@ -1,10 +1,10 @@
 import ProductVisual from '../components/ProductVisual'
 
 const products = [
-  { no: '01', name: 'Clutch Cover', type: 'cover', src: '/images/products/clutch-cover.webp', note: 'Pressure plate assembly' },
-  { no: '02', name: 'Driven Disc', type: 'disc', src: '/images/products/driven-disc.webp', note: 'Friction disc assembly' },
-  { no: '03', name: 'Release Bearing', type: 'bearing', src: '/images/products/release-bearing.webp', note: 'Release system' },
-  { no: '04', name: 'Related Components', type: 'other', src: '/images/products/related-components.webp', note: 'Application-led sourcing' },
+  { no: '01', name: 'Clutch Cover', type: 'cover', src: '/assets/library/products/clutch-cover-01.jpg', note: 'Pressure plate assembly' },
+  { no: '02', name: 'Driven Disc', type: 'disc', src: '/assets/library/products/clutch-disc-01.png', note: 'Friction disc assembly' },
+  { no: '03', name: 'Release Bearing', type: 'bearing', src: '/assets/library/products/release-bearing-01.png', note: 'Release system' },
+  { no: '04', name: 'Related Components', type: 'other', src: '/assets/library/products/related-components-01.png', note: 'Application-led sourcing' },
 ]
 
 function Capability() {
@@ -40,17 +40,15 @@ function Capability() {
           <h2>Made to arrive<br /><em>as ASH.</em></h2>
           <p>
             Packaging is part of the product experience — clear identification,
-            restrained graphics and a format built for export handling.
+            restrained graphics and a format designed for an export-facing line.
           </p>
         </div>
         <div className="packaging-frame">
           <img
-            src="/images/packaging/ash-box.webp"
-            alt="ASH clutch packaging"
-            onError={(event) => { event.currentTarget.style.display = 'none' }}
+            src="/assets/library/packaging/ash-clutch-kit-box-01.webp"
+            alt="ASH clutch kit packaging"
           />
-          <img className="packaging-texture" src="/assets/brand/ash-leaf.svg" alt="" />
-          <div className="packaging-fallback"><span>ASH</span><small>PACKAGING / 01</small></div>
+          <div className="packaging-label">ASH / CLUTCH KIT</div>
         </div>
       </div>
 
