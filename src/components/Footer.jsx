@@ -1,13 +1,18 @@
 function Footer() {
-  const logoSrc = "/assets/library/brand/ash-logo-approved.png";
-
   return (
     <footer className="site-footer">
       <div className="footer-brand">
-        <img className="footer-logo" src={logoSrc} alt="ASH" />
-        <span>GLOBAL CLUTCH SOLUTIONS</span>
+        <img src="/assets/library/brand/ash-logo-approved.png" alt="ASH" />
+        <span>ASHLIRA AUTOMOTIVE PARTS CO., LTD.</span>
       </div>
-      <span>© 2026 ASH</span>
+      <nav>
+        <a href="#top">Home</a><i /> <a href="#products">Products</a><i /> <a href="#products">About Us</a><i /> <a href="#contact">Contact</a>
+      </nav>
+      <div className="footer-contact">
+        <a href="mailto:hello@ashlira.com">✉ &nbsp; hello@ashlira.com</a>
+        <span>© 2026 ASH. All rights reserved.</span>
+      </div>
+      <img className="footer-leaf" src="/images/brand/footer-leaf.svg" alt="" />
     </footer>
   )
 }
