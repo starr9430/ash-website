@@ -1,17 +1,16 @@
 const features = [
-  { icon: '01', title: 'APPLICATION-LED', text: <>Start from the vehicle,<br />reference and market need.</> },
-  { icon: '02', title: 'MATERIAL FOCUS', text: <>Product choices follow<br />the application requirement.</> },
-  { icon: '03', title: 'RANGE BUILDING', text: <>Combine references into<br />a workable sourcing range.</> },
-  { icon: '04', title: 'EXPORT-MINDED', text: <>Built for importers,<br />distributors and workshops.</> },
+  { icon: '/images/brand/icon-reliability.svg', title: 'HIGH RELIABILITY', text: 'Stable performance in all conditions.' },
+  { icon: '/images/brand/icon-materials.svg', title: 'PREMIUM MATERIALS', text: 'Selected materials for longer service life.' },
+  { icon: '/images/brand/icon-coverage.svg', title: 'WIDE COVERAGE', text: 'Passenger, light truck, commercial vehicles.' },
+  { icon: '/images/brand/icon-supply.svg', title: 'GLOBAL SUPPLY', text: 'Reliable support for your business.' },
 ]
 
 function FeatureStrip() {
   return (
-    <section className="feature-strip" aria-label="ASH product principles">
+    <section className="feature-strip" aria-label="ASH capabilities">
       {features.map((item) => (
-        <article className="feature-card" key={item.icon}>
-          <span className="feature-index">{item.icon}</span>
-          <span className="feature-rule" />
+        <article className="feature-item" key={item.title}>
+          <img src={item.icon} alt="" />
           <div>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
