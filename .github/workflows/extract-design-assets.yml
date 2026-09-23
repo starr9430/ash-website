@@ -28,6 +28,7 @@ jobs:
           im.crop((500,78,1536,533)).save(out/'ash-hero-artwork.png', optimize=True)
           im2=Image.open('public/assets/library/originals/website-reference/网站假想图2.png').convert('RGB')
           im2.save(out/'ash-reference-layout-2.jpg', quality=95)
+          im2.save(out/'ash-reference-layout-2.png', optimize=True)
           im2.crop((500,78,1536,533)).save(out/'ash-hero-artwork-2.png', optimize=True)
           im.crop((474,692,711,918)).save(out/'ash-product-cover-card.png', optimize=True)
           im.crop((723,692,956,918)).save(out/'ash-product-disc-card.png', optimize=True)
@@ -42,6 +43,14 @@ jobs:
           rm -f public/assets/library/derived/hero-candidate-b.png
           rm -f public/assets/library/derived/hero-candidate-c.png
           rm -f public/assets/library/derived/hero-candidates-contact-sheet.jpg
+      - name: Upload reference 2 for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: ash-reference-2
+          path: |
+            public/assets/library/derived/ash-reference-layout-2.png
+            public/assets/library/derived/ash-hero-artwork-2.png
+
       - name: Commit derived assets
         run: |
           git config user.name 'github-actions[bot]'
