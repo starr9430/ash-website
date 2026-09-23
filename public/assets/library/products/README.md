@@ -1,13 +1,30 @@
-# Products
+# ASH Product Assets
 
-Real ASH product imagery belongs here.
+This folder is for website-ready derived product assets.
 
-Recommended roles:
+## Source files
 
-- `hero-clutch-*` — hero composition / main product.
-- `clutch-cover-*` — pressure plate / cover assembly.
-- `clutch-disc-*` — driven disc.
-- `release-bearing-*` — release bearing.
-- `detail-*` — material and machining close-ups.
+Original product photographs belong in:
+public/assets/library/originals/products/
 
-Do not treat illustration fallbacks in the React components as product photography.
+## Recommended derived roles
+
+- hero-clutch-* — final hero / editorial product composition
+- clutch-cover-* — pressure plate / cover
+- clutch-disc-* — driven disc
+- release-bearing-* — release bearing
+- clutch-kit-* — complete kit
+- commercial-clutch-* — commercial vehicle clutch
+- detail-* — material / machining details
+
+## Rule
+
+Original photographs are references and source material.
+
+Do not put raw source photos directly into the website when they still contain:
+- white margins
+- baked-in labels
+- unrelated surrounding objects
+- uncontrolled lighting/background
+
+The website should use cleaned, composition-ready derivatives.
