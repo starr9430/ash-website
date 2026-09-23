@@ -1,0 +1,68 @@
+name: Build ASH Website Product Assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/assets/library/originals/products/**'
+      - '.github/workflows/product-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install image tools
+        run: python -m pip install pillow opencv-python-headless
+      - name: Clean and export product assets
+        run: |
+          python - <<'PY'
+          import cv2, numpy as np
+          from PIL import Image
+          from pathlib import Path
+
+          srcdir=Path('public/assets/library/originals/products')
+          out=Path('public/assets/library/products')
+          out.mkdir(parents=True,exist_ok=True)
+
+          def clean(path, name, pad=24, scale=1.0):
+            img=cv2.imread(str(path),cv2.IMREAD_COLOR)
+            if img is None: raise SystemExit(f'Cannot read {path}')
+            rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+            # White-background source: build a soft alpha from distance to white.
+            dist=255-rgb.astype(np.int16).mean(axis=2)
+            alpha=np.clip((dist-6)*12,0,255).astype(np.uint8)
+            # Keep light metal while suppressing paper/background.
+            alpha=cv2.GaussianBlur(alpha,(0,0),0.7)
+            ys,xs=np.where(alpha>18)
+            if len(xs)==0: raise SystemExit(f'No foreground found in {path}')
+            x0,x1=max(0,xs.min()-pad),min(rgb.shape[1],xs.max()+pad+1)
+            y0,y1=max(0,ys.min()-pad),min(rgb.shape[0],ys.max()+pad+1)
+            rgba=np.dstack([rgb[y0:y1,x0:x1],alpha[y0:y1,x0:x1]])
+            Image.fromarray(rgba,'RGBA').save(out/name,quality=92,method=6)
+
+          clean(srcdir/'压盘.jpg','clutch-cover-01.webp',28)
+          clean(srcdir/'从动盘.jpg','clutch-disc-01.webp',28)
+          clean(srcdir/'分离轴承-正面.jpg','release-bearing-front-01.webp',26)
+          clean(srcdir/'分离轴承-侧面.jpg','release-bearing-side-01.webp',26)
+          clean(srcdir/'分离轴承背面.jpg','release-bearing-back-01.webp',26)
+          clean(srcdir/'其它零件-导向轴承1.jpg','pilot-bearing-01.webp',24)
+
+          # Hydraulic bearing source is a four-view board. Keep a single clean view.
+          im=Image.open(srcdir/'液压轴承-四面图.jpg').convert('RGB')
+          w,h=im.size
+          # top-left quadrant contains a single front-facing hydraulic bearing.
+          q=im.crop((int(w*.03),int(h*.03),int(w*.49),int(h*.49)))
+          q.save(out/'hydraulic-bearing-front-01.webp',quality=92,method=6)
+          print('Exported website-ready product assets')
+          PY
+      - name: Commit website assets
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/assets/library/products
+          git commit -m 'Build first ASH website product asset set' || echo 'No changes'
+          git push
