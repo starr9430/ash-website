@@ -7,7 +7,7 @@ function Contact() {
       </div>
       <div className="contact-side">
         <p>Tell us the vehicle, reference or market you need to cover. We'll work from there.</p>
-        <a href="mailto:hello@ashlira.com">hello@ashlira.com <span>↗</span></a>
+        <a href="mailto:starr@ashlira.com">starr@ashlira.com <span>↗</span></a>
       </div>
     </section>
   )
