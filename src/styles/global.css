@@ -46,55 +46,78 @@ button,a{font:inherit}
 
 .hero{
   position:relative;
-  min-height:455px;
-  display:grid;
-  grid-template-columns:38% 62%;
+  min-height:516px;
   overflow:hidden;
-  background:var(--ash-paper-light);
+  background:#e8e5dc;
 }
-.hero-copy{
-  position:relative;
-  z-index:4;
-  padding:70px 25px 50px clamp(28px,8vw,122px);
-}
-.hero-logo{width:min(300px,75%);height:auto}
-.hero-product-name{
-  margin:22px 0 0;
-  font-size:30px;
-  line-height:1;
-  letter-spacing:.28em;
-  font-weight:400;
-  color:#132f3b;
-}
-.hero-rule{width:38px;height:1px;background:#173944;margin:24px 0}
-.hero-eyebrow{margin:0;color:#173944;font-size:14px;letter-spacing:.34em}
-.hero-description{max-width:370px;margin:13px 0 0;font-size:15px;line-height:1.65;color:#24343a}
-.hero-button{
-  display:inline-flex;
-  align-items:center;
-  gap:18px;
-  margin-top:25px;
-  padding:13px 21px;
-  background:#153c48;
-  color:#f7f4eb;
-  font-size:14px;
-  letter-spacing:.02em;
-}
-.hero-button span{font-size:18px}
-.hero-art{
-  position:relative;
-  min-width:0;
-  overflow:hidden;
-}
-.hero-art img{
+.hero-scene{
   position:absolute;
   inset:0;
+  z-index:0;
   width:100%;
   height:100%;
   object-fit:cover;
   object-position:center;
 }
-
+.hero-copy{
+  position:relative;
+  z-index:2;
+  width:min(39%,500px);
+  min-height:516px;
+  padding:66px 24px 45px clamp(28px,6.7vw,102px);
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.hero-copy:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:0;
+  top:0;
+  width:105%;
+  height:100%;
+  background:linear-gradient(90deg,rgba(245,243,236,.82) 0%,rgba(245,243,236,.58) 62%,rgba(245,243,236,0) 100%);
+  pointer-events:none;
+}
+.hero-logo{width:118px;height:auto;opacity:.9}
+.hero-product-name{
+  margin:15px 0 0;
+  font-size:10px;
+  line-height:1;
+  letter-spacing:.34em;
+  color:#163a45;
+}
+.hero-rule{width:58px;height:1px;background:#173944;margin:18px 0 13px}
+.hero-copy h1{
+  margin:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(52px,5.1vw,78px);
+  line-height:.91;
+  letter-spacing:-.055em;
+  font-weight:500;
+  color:#123642;
+}
+.hero-copy h1 em{font-style:normal}
+.hero-description{
+  margin:24px 0 0;
+  font-size:13px;
+  line-height:1.65;
+  color:#40575e;
+}
+.hero-button{
+  display:inline-flex;
+  align-items:center;
+  gap:18px;
+  margin-top:22px;
+  padding:13px 20px;
+  background:#153c48;
+  color:#f7f4eb;
+  font-size:13px;
+  letter-spacing:.01em;
+  box-shadow:0 8px 18px rgba(15,48,58,.12);
+}
+.hero-button span{font-size:18px}
 .feature-strip{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -216,32 +239,30 @@ button,a{font:inherit}
 .footer-contact{display:flex;justify-content:flex-end;gap:28px;white-space:nowrap}
 .footer-leaf{position:absolute;right:-2px;bottom:-72px;width:175px;opacity:.75;filter:brightness(0) invert(1)}
 
+
 @media(max-width:1050px){
   .site-header{grid-template-columns:auto 1fr auto}
   .site-header nav{justify-content:center;gap:22px}
   .header-meta a:last-child,.header-meta>span{display:none}
-  .hero{grid-template-columns:40% 60%}
-  .hero-copy{padding-left:6vw}
-  .hero-logo{width:min(250px,85%)}
-  .hero-product-name{font-size:25px}
+  .hero-copy{width:46%;padding-left:5vw}
+  .hero-copy h1{font-size:clamp(48px,6vw,70px)}
   .feature-strip{padding-left:5vw;padding-right:5vw}
   .feature-item{padding-left:18px;padding-right:18px}
   .products-section{grid-template-columns:1fr}
   .products-intro{padding-right:0}
   .products-copy{max-width:560px}
 }
-
 @media(max-width:760px){
   .site-header{height:68px;padding:0 20px}
   .header-logo img{width:86px}
   .site-header nav{display:none}
   .header-meta{font-size:9px}
-  .hero{display:block;min-height:auto}
-  .hero-copy{padding:48px 24px 38px}
-  .hero-logo{width:220px}
-  .hero-product-name{font-size:23px}
-  .hero-art{height:330px}
-  .hero-art img{object-position:58% center}
+  .hero{min-height:600px}
+  .hero-scene{object-position:62% center}
+  .hero-copy{width:100%;min-height:360px;padding:44px 24px 30px}
+  .hero-copy:before{width:100%;height:78%;background:linear-gradient(180deg,rgba(245,243,236,.86),rgba(245,243,236,.55) 70%,rgba(245,243,236,0))}
+  .hero-logo{width:95px}
+  .hero-copy h1{font-size:54px}
   .feature-strip{grid-template-columns:1fr 1fr;padding:0 20px}
   .feature-item{min-height:95px;padding:18px 12px;border-right:1px solid rgba(24,32,27,.16);border-bottom:1px solid rgba(24,32,27,.16)}
   .feature-item:nth-child(2){border-right:0}
@@ -255,17 +276,16 @@ button,a{font:inherit}
   .site-footer nav{justify-content:flex-start}
   .footer-contact{justify-content:flex-start;flex-wrap:wrap}
 }
-
 @media(max-width:480px){
   .header-meta a:first-child{font-size:0}
   .header-meta a:first-child:first-letter{font-size:16px}
-  .hero-art{height:270px}
-  .hero-art img{object-position:57% center}
+  .hero{min-height:570px}
+  .hero-scene{object-position:64% center}
+  .hero-copy{padding-top:38px}
+  .hero-copy h1{font-size:49px}
   .product-grid{grid-template-columns:1fr}
   .product-image{height:210px}
   .feature-item img{width:28px;height:28px}
   .feature-item h3{font-size:9px}
   .feature-item p{font-size:10px}
 }
-
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
