@@ -13,7 +13,7 @@ function Header() {
         <a href="#contact">CONTACT</a>
       </nav>
       <div className="header-meta">
-        <a href="mailto:hello@ashlira.com">✉ &nbsp; hello@ashlira.com</a>
+        <a href="mailto:starr@ashlira.com">✉ &nbsp; starr@ashlira.com</a>
         <span />
         <a href="#top">◎ &nbsp; EN⌄</a>
       </div>
