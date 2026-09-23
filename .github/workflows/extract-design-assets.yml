@@ -45,10 +45,10 @@ jobs:
           clean=Image.fromarray(cv2.cvtColor(bgr,cv2.COLOR_BGR2RGB))
           clean.save(out/'ash-hero-scene-clean.png', optimize=True)
           hero.crop((500,0,1536,516)).save(out/'ash-hero-artwork-2.png', optimize=True)
-          im.crop((474,692,711,918)).save(out/'ash-product-cover-card.png', optimize=True)
-          im.crop((723,692,956,918)).save(out/'ash-product-disc-card.png', optimize=True)
-          im.crop((968,692,1201,918)).save(out/'ash-product-bearing-card.png', optimize=True)
-          im.crop((1212,692,1446,918)).save(out/'ash-product-components-card.png', optimize=True)
+          im.crop((474,692,711,842)).save(out/'ash-product-cover-card.png', optimize=True)
+          im.crop((723,692,956,842)).save(out/'ash-product-disc-card.png', optimize=True)
+          im.crop((968,692,1201,842)).save(out/'ash-product-bearing-card.png', optimize=True)
+          im.crop((1212,692,1446,842)).save(out/'ash-product-components-card.png', optimize=True)
           PY
       - name: Remove obsolete derived assets
         run: |
