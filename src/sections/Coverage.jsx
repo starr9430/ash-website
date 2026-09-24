@@ -44,7 +44,7 @@ function Coverage() {
 
       <div className="product-grid">
         {products.map((item) => (
-          <article className="product-card" key={item.title}>
+          <article className={`product-card product-card--${item.key}`} key={item.title}>
             <div className="product-image">
               <img className="product-photo" src={item.image} alt={item.title} loading="lazy" />
             </div>
