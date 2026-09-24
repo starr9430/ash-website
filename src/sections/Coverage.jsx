@@ -1,21 +1,25 @@
 const products = [
   {
+    key: 'cover',
     image: '/assets/library/derived/products/clutch-cover-editorial.webp',
     title: 'Clutch Cover',
     subtitle: 'PRESSURE PLATE ASSEMBLY',
   },
   {
+    key: 'disc',
     image: '/assets/library/derived/products/clutch-disc-editorial.webp',
     title: 'Driven Disc',
     subtitle: 'FRICTION DISC',
   },
   {
+    key: 'release',
     image: '/assets/library/derived/products/release-bearing-editorial.webp',
     title: 'Release Bearing',
     subtitle: 'RELEASE SYSTEM',
   },
   {
-    image: '/assets/library/derived/products/hydraulic-bearing-editorial.webp',
+    key: 'hydraulic',
+    image: '/assets/library/originals/products/液压轴承-高清.jpg',
     title: 'Hydraulic Bearing',
     subtitle: 'HYDRAULIC RELEASE SYSTEM',
   },
@@ -40,9 +44,9 @@ function Coverage() {
 
       <div className="product-grid">
         {products.map((item) => (
-          <article className="product-card" key={item.title}>
+          <article className={`product-card product-card--${item.key}`} key={item.title}>
             <div className="product-image">
-              <img src={item.image} alt={item.title} loading="lazy" />
+              <img className="product-photo" src={item.image} alt={item.title} loading="lazy" />
             </div>
             <div className="product-card-copy">
               <h3>{item.title}</h3>
