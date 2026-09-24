@@ -13,7 +13,7 @@ const products = [
   },
   {
     key: 'release',
-    image: '/assets/library/derived/products/release-bearing-editorial.webp',
+    image: '/assets/library/products/release-bearing-front-01.webp',
     title: 'Release Bearing',
     subtitle: 'RELEASE SYSTEM',
   },
