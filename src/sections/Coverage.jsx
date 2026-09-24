@@ -13,13 +13,13 @@ const products = [
   },
   {
     key: 'release',
-    image: '/assets/library/products/release-bearing-front-01.webp',
+    image: '/assets/library/derived/products/release-bearing-editorial.webp',
     title: 'Release Bearing',
     subtitle: 'RELEASE SYSTEM',
   },
   {
     key: 'hydraulic',
-    image: '/assets/library/originals/products/液压轴承-高清.jpg',
+    image: '/assets/library/derived/products/hydraulic-bearing-editorial.webp',
     title: 'Hydraulic Bearing',
     subtitle: 'HYDRAULIC RELEASE SYSTEM',
   },
@@ -44,7 +44,7 @@ function Coverage() {
 
       <div className="product-grid">
         {products.map((item) => (
-          <article className={`product-card product-card--${item.key}`} key={item.title}>
+          <article className="product-card" key={item.title}>
             <div className="product-image">
               <img className="product-photo" src={item.image} alt={item.title} loading="lazy" />
             </div>
