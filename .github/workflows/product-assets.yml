@@ -185,15 +185,17 @@ jobs:
 
           print('Built ASH editorial product compositions')
           PY
+      - name: Upload product review
+        uses: actions/upload-artifact@v4
+        with:
+          name: ash-product-editorial-review
+          path: public/assets/library/derived/products/product-editorial-review.jpg
+
       - name: Commit website assets
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add public/assets/library/products public/assets/library/derived/products
           git commit -m 'Create ASH editorial product compositions' || echo 'No changes'
+          git pull --rebase origin main
           git push
-      - name: Upload product review
-        uses: actions/upload-artifact@v4
-        with:
-          name: ash-product-editorial-review
-          path: public/assets/library/derived/products/product-editorial-review.jpg
