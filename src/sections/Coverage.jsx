@@ -35,7 +35,7 @@ function Coverage() {
           <h2>Clutch Components<br />Built as a System</h2>
         </div>
         <p className="products-copy">
-          From core clutch assemblies to supporting release components, ashlira brings practical coverage together for passenger cars, light commercial vehicles, and selected commercial applications.
+          From core clutch assemblies to supporting release components, ASHLIRA brings practical coverage together for passenger cars, light commercial vehicles, and selected commercial applications.
         </p>
         <a className="products-link" href="#contact">
           Discuss Your Range <span>→</span>
