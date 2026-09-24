@@ -5,7 +5,9 @@ on:
     branches: [main]
     paths:
       - 'public/assets/library/originals/products/**'
+      - 'scripts/process-product-assets.py'
       - '.github/workflows/product-assets.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,180 +17,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Install image tools
-        run: python -m pip install pillow opencv-python-headless
-      - name: Build cutouts and editorial product compositions
-        run: |
-          python - <<'PY'
-          import cv2, math, numpy as np
-          from PIL import Image, ImageDraw, ImageFilter
-          from pathlib import Path
+        run: python -m pip install pillow opencv-python-headless numpy
 
-          srcdir=Path('public/assets/library/originals/products')
-          cutout_dir=Path('public/assets/library/products')
-          editorial_dir=Path('public/assets/library/derived/products')
-          cutout_dir.mkdir(parents=True,exist_ok=True)
-          editorial_dir.mkdir(parents=True,exist_ok=True)
+      - name: Build four final product assets
+        run: python scripts/process-product-assets.py
 
-          def extract_cutout(path, pad=24, max_side=1500):
-              img=cv2.imread(str(path),cv2.IMREAD_COLOR)
-              if img is None:
-                  raise SystemExit(f'Cannot read {path}')
-
-              rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-              h,w=rgb.shape[:2]
-              gray=cv2.cvtColor(rgb,cv2.COLOR_RGB2GRAY)
-              hsv=cv2.cvtColor(rgb,cv2.COLOR_RGB2HSV)
-              sat=hsv[:,:,1]
-
-              # Product originals are photographed on a light, nearly neutral background.
-              # Build a soft alpha matte from distance to that background instead of
-              # forcing GrabCut to guess at pale metal surfaces.
-              neutral_distance=np.sqrt(np.sum((rgb.astype(np.float32)-250.0)**2,axis=2))
-              alpha=np.clip((neutral_distance-8.0)*5.5,0,255)
-
-              # Keep darker metal/rubber and chromatic edges fully present.
-              strong=((gray<218)|(sat>28))
-              alpha[strong]=255
-
-              # Remove the broad, low-contrast photo shadow/background haze.
-              soft_bg=(gray>244)&(sat<18)
-              alpha[soft_bg]=0
-
-              # Feather only the edge, then clean isolated specks.
-              alpha=alpha.astype(np.uint8)
-              alpha=cv2.GaussianBlur(alpha,(0,0),0.55)
-              binary=(alpha>32).astype(np.uint8)
-              kernel=cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5,5))
-              binary=cv2.morphologyEx(binary,cv2.MORPH_CLOSE,kernel)
-              binary=cv2.morphologyEx(binary,cv2.MORPH_OPEN,kernel)
-
-              # Retain the main foreground region(s) while allowing separate mounting tabs
-              # that belong to the same product silhouette.
-              n,labels,stats,cent=cv2.connectedComponentsWithStats(binary,8)
-              if n<=1:
-                  raise SystemExit(f'No foreground found in {path}')
-
-              areas=stats[1:,cv2.CC_STAT_AREA]
-              order=np.argsort(areas)[::-1]+1
-              keep=set(order[:6].tolist())
-              if not keep:
-                  raise SystemExit(f'No usable foreground in {path}')
-
-              mask=np.isin(labels,list(keep))
-              alpha=np.where(mask,alpha,0).astype(np.uint8)
-
-              ys,xs=np.where(alpha>18)
-              if len(xs)==0:
-                  raise SystemExit(f'No foreground found in {path}')
-
-              x0=max(0,int(xs.min())-pad)
-              x1=min(w,int(xs.max())+pad+1)
-              y0=max(0,int(ys.min())-pad)
-              y1=min(h,int(ys.max())+pad+1)
-
-              crop=rgb[y0:y1,x0:x1]
-              acrop=alpha[y0:y1,x0:x1]
-
-              scale=min(1.0,max_side/max(crop.shape[1],crop.shape[0]))
-              if scale<1:
-                  crop=cv2.resize(crop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
-                  acrop=cv2.resize(acrop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
-
-              return Image.fromarray(np.dstack([crop,acrop]).astype(np.uint8),'RGBA')
-
-          def leaf_shadow(size=(1000,780), angle=-18, alpha=20):
-              w,h=size
-              layer=Image.new('RGBA',(w,h),(0,0,0,0))
-              draw=ImageDraw.Draw(layer)
-
-              cx,cy=w*.52,h*.59
-              length=w*.50
-              width=h*.20
-              pts=[]
-              for i in range(41):
-                  t=i/40
-                  x=cx-length/2+length*t
-                  y=cy-width*math.sin(math.pi*t)
-                  pts.append((x,y))
-              for i in range(40,-1,-1):
-                  t=i/40
-                  x=cx-length/2+length*t
-                  y=cy+width*math.sin(math.pi*t)
-                  pts.append((x,y))
-              draw.polygon(pts,fill=(32,63,54,alpha))
-              vein=Image.new('RGBA',(w,h),(0,0,0,0))
-              vd=ImageDraw.Draw(vein)
-              vd.line([(cx-length/2+20,cy),(cx+length/2-20,cy)],fill=(32,63,54,int(alpha*.65)),width=2)
-              layer=Image.alpha_composite(layer,vein).rotate(angle,Image.Resampling.BICUBIC,expand=False)
-              return layer.filter(ImageFilter.GaussianBlur(20))
-
-          def editorial(cutout, name, rotation=0, scale=.72, xshift=0, yshift=-12):
-              W,H=1000,780
-              canvas=Image.new('RGBA',(W,H),(0,0,0,0))
-
-              # The natural motif stays subordinate to the mechanical product.
-              canvas=Image.alpha_composite(canvas,leaf_shadow((W,H),angle=rotation-4,alpha=20))
-
-              ground=Image.new('RGBA',(W,H),(0,0,0,0))
-              gd=ImageDraw.Draw(ground)
-              gd.ellipse((W*.24,H*.61,W*.76,H*.73),fill=(20,42,38,28))
-              ground=ground.filter(ImageFilter.GaussianBlur(20))
-              canvas=Image.alpha_composite(canvas,ground)
-
-              product=cutout.copy()
-              target=max(80,int(min(W,H)*scale))
-              product.thumbnail((target,target),Image.Resampling.LANCZOS)
-              product=product.rotate(rotation,Image.Resampling.BICUBIC,expand=True)
-
-              px=int((W-product.width)/2+xshift)
-              py=int((H-product.height)/2+yshift)
-              canvas.alpha_composite(product,(px,py))
-              canvas.save(editorial_dir/name,'WEBP',quality=90,method=6)
-              return canvas
-
-          cover=extract_cutout(srcdir/'压盘.jpg',26)
-          disc=extract_cutout(srcdir/'从动盘.jpg',26)
-
-          # Keep the intended release-bearing source; only clean the photographic background.
-          release=extract_cutout(srcdir/'分离轴承-侧面.jpg',22)
-
-          # Use the dedicated high-resolution hydraulic bearing source rather than the
-          # four-view board. This preserves the real product photo chosen for the website.
-          hydraulic=extract_cutout(srcdir/'液压轴承-高清.jpg',20)
-
-          for cutout,name in [
-              (cover,'clutch-cover-01.webp'),
-              (disc,'clutch-disc-01.webp'),
-              (release,'release-bearing-side-01.webp'),
-              (hydraulic,'hydraulic-bearing-front-01.webp'),
-          ]:
-              cutout.save(cutout_dir/name,'WEBP',quality=88,method=6)
-
-          editorial(cover,'clutch-cover-editorial.webp',rotation=-11,scale=.67,xshift=-8,yshift=-5)
-          editorial(disc,'clutch-disc-editorial.webp',rotation=9,scale=.66,xshift=5,yshift=-2)
-          editorial(release,'release-bearing-editorial.webp',rotation=-15,scale=.57,xshift=12,yshift=-8)
-          editorial(hydraulic,'hydraulic-bearing-editorial.webp',rotation=12,scale=.57,xshift=-8,yshift=-10)
-
-          labels=[
-              ('CLUTCH COVER','clutch-cover-editorial.webp'),
-              ('DRIVEN DISC','clutch-disc-editorial.webp'),
-              ('RELEASE BEARING','release-bearing-editorial.webp'),
-              ('HYDRAULIC BEARING','hydraulic-bearing-editorial.webp'),
-          ]
-          sheet=Image.new('RGB',(2000,1320),(235,232,223))
-          for i,(label,name) in enumerate(labels):
-              card=Image.open(editorial_dir/name).convert('RGBA')
-              bg=Image.new('RGBA',(1000,660),(235,232,223,255))
-              bg.alpha_composite(card.resize((1000,780),Image.Resampling.LANCZOS).crop((0,60,1000,720)),(0,0))
-              bg=bg.convert('RGB')
-              d=ImageDraw.Draw(bg)
-              d.text((34,610),label,fill=(18,45,56))
-              sheet.paste(bg,((i%2)*1000,(i//2)*660))
-          sheet.save(editorial_dir/'product-editorial-review.jpg',quality=93)
-
-          print('Built ASH editorial product compositions from original product photos')
-          PY
       - name: Upload product review
         uses: actions/upload-artifact@v4
         with:
@@ -198,8 +35,8 @@ jobs:
       - name: Commit website assets
         run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+users.noreply.github.com'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add public/assets/library/products public/assets/library/derived/products
-          git commit -m 'Rebuild ASH product cutouts from original photos' || echo 'No changes'
+          git commit -m 'Rebuild final ASH product assets with corrected processing' || echo 'No changes'
           git pull --rebase origin main
           git push
