@@ -20,7 +20,8 @@ jobs:
       - name: Clean and export product assets
         run: |
           python - <<'PY'
-          import cv2, numpy as np
+          import cv2
+          import numpy as np
           from PIL import Image
           from pathlib import Path
 
@@ -28,41 +29,117 @@ jobs:
           out=Path('public/assets/library/products')
           out.mkdir(parents=True,exist_ok=True)
 
-          def clean(path, name, pad=24, scale=1.0):
+          def clean(path, name, pad=22, max_side=1400):
             img=cv2.imread(str(path),cv2.IMREAD_COLOR)
-            if img is None: raise SystemExit(f'Cannot read {path}')
+            if img is None:
+              raise SystemExit(f'Cannot read {path}')
             rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-            # White-background source: build a soft alpha from distance to white.
-            dist=255-rgb.astype(np.int16).mean(axis=2)
-            alpha=np.clip((dist-6)*12,0,255).astype(np.uint8)
-            # Keep light metal while suppressing paper/background.
-            alpha=cv2.GaussianBlur(alpha,(0,0),0.7)
-            ys,xs=np.where(alpha>18)
-            if len(xs)==0: raise SystemExit(f'No foreground found in {path}')
-            x0,x1=max(0,xs.min()-pad),min(rgb.shape[1],xs.max()+pad+1)
-            y0,y1=max(0,ys.min()-pad),min(rgb.shape[0],ys.max()+pad+1)
-            rgba=np.dstack([rgb[y0:y1,x0:x1],alpha[y0:y1,x0:x1]])
-            Image.fromarray(rgba,'RGBA').save(out/name,quality=92,method=6)
+            h,w=rgb.shape[:2]
 
-          clean(srcdir/'压盘.jpg','clutch-cover-01.webp',28)
-          clean(srcdir/'从动盘.jpg','clutch-disc-01.webp',28)
-          clean(srcdir/'分离轴承-正面.jpg','release-bearing-front-01.webp',26)
-          clean(srcdir/'分离轴承-侧面.jpg','release-bearing-side-01.webp',26)
-          clean(srcdir/'分离轴承背面.jpg','release-bearing-back-01.webp',26)
-          clean(srcdir/'其它零件-导向轴承1.jpg','pilot-bearing-01.webp',24)
+            # Build a background-aware initial mask for the photographed white/paper stage.
+            gray=cv2.cvtColor(rgb,cv2.COLOR_RGB2GRAY)
+            mx=rgb.max(axis=2)
+            mn=rgb.min(axis=2)
+            bg=((gray>246)&((mx-mn)<12)).astype(np.uint8)
+            fg=((gray<205)|((mx-mn)>28)).astype(np.uint8)
 
-          # Hydraulic bearing source is a four-view board. Keep a single clean view.
-          im=Image.open(srcdir/'液压轴承-四面图.jpg').convert('RGB')
-          w,h=im.size
-          # top-left quadrant contains a single front-facing hydraulic bearing.
-          q=im.crop((int(w*.03),int(h*.03),int(w*.49),int(h*.49)))
-          q.save(out/'hydraulic-bearing-front-01.webp',quality=92,method=6)
-          print('Exported website-ready product assets')
+            mask=np.full((h,w),cv2.GC_PR_BGD,np.uint8)
+            mask[bg==1]=cv2.GC_BGD
+            mask[fg==1]=cv2.GC_PR_FGD
+
+            # Force a narrow border to background so the paper margin never becomes foreground.
+            mask[:8,:]=cv2.GC_BGD
+            mask[-8:,:]=cv2.GC_BGD
+            mask[:,:8]=cv2.GC_BGD
+            mask[:,-8:]=cv2.GC_BGD
+
+            bgd=np.zeros((1,65),np.float64)
+            fgd=np.zeros((1,65),np.float64)
+            cv2.grabCut(rgb,mask,None,bgd,fgd,7,cv2.GC_INIT_WITH_MASK)
+
+            alpha=np.where(
+              (mask==cv2.GC_FGD)|(mask==cv2.GC_PR_FGD),255,0
+            ).astype(np.uint8)
+            alpha=cv2.GaussianBlur(alpha,(0,0),0.65)
+
+            ys,xs=np.where(alpha>24)
+            if len(xs)==0:
+              raise SystemExit(f'No foreground found in {path}')
+
+            x0=max(0,int(xs.min())-pad)
+            x1=min(w,int(xs.max())+pad+1)
+            y0=max(0,int(ys.min())-pad)
+            y1=min(h,int(ys.max())+pad+1)
+
+            crop=rgb[y0:y1,x0:x1]
+            acrop=alpha[y0:y1,x0:x1]
+
+            scale=min(1.0,max_side/max(crop.shape[1],crop.shape[0]))
+            if scale<1:
+              crop=cv2.resize(crop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
+              acrop=cv2.resize(acrop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
+
+            rgba=np.dstack([crop,acrop])
+            Image.fromarray(rgba,'RGBA').save(
+              out/name,'WEBP',quality=84,method=6
+            )
+
+          clean(srcdir/'压盘.jpg','clutch-cover-01.webp',26)
+          clean(srcdir/'从动盘.jpg','clutch-disc-01.webp',26)
+          clean(srcdir/'分离轴承-正面.jpg','release-bearing-front-01.webp',22)
+          clean(srcdir/'分离轴承-侧面.jpg','release-bearing-side-01.webp',22)
+          clean(srcdir/'分离轴承背面.jpg','release-bearing-back-01.webp',22)
+          clean(srcdir/'其它零件-导向轴承1.jpg','pilot-bearing-01.webp',20)
+
+          # Hydraulic bearing source is a four-view board. Keep one clean view and then process it.
+          board=Image.open(srcdir/'液压轴承-四面图.jpg').convert('RGB')
+          w,h=board.size
+          q=board.crop((int(w*.03),int(h*.03),int(w*.49),int(h*.49)))
+          qpath=out/'_hydraulic-source.png'
+          q.save(qpath)
+          clean(qpath,'hydraulic-bearing-front-01.webp',20)
+          qpath.unlink(missing_ok=True)
+
+          print('Exported optimized ASH product assets')
+          PY
+      - name: Build product review preview
+        run: |
+          python - <<'PY'
+          from PIL import Image, ImageOps, ImageDraw
+          from pathlib import Path
+          src=Path('public/assets/library/products')
+          names=[
+            ('CLUTCH COVER','clutch-cover-01.webp'),
+            ('DRIVEN DISC','clutch-disc-01.webp'),
+            ('RELEASE BEARING','release-bearing-front-01.webp'),
+            ('HYDRAULIC BEARING','hydraulic-bearing-front-01.webp'),
+            ('PILOT BEARING','pilot-bearing-01.webp'),
+          ]
+          out=Path('public/assets/library/derived/product-review')
+          out.mkdir(parents=True,exist_ok=True)
+          cards=[]
+          for label,name in names:
+            im=Image.open(src/name).convert('RGBA')
+            canvas=Image.new('RGBA',(620,460),(245,243,236,255))
+            thumb=ImageOps.contain(im,(560,360))
+            canvas.alpha_composite(thumb,((620-thumb.width)//2,20))
+            d=ImageDraw.Draw(canvas)
+            d.text((24,415),label,fill=(18,54,66,255))
+            cards.append(canvas.convert('RGB'))
+          sheet=Image.new('RGB',(1240,1380),(232,229,220))
+          for i,c in enumerate(cards):
+            sheet.paste(c,((i%2)*620,(i//2)*460))
+          sheet.save(out/'product-processed-preview.jpg',quality=93)
           PY
       - name: Commit website assets
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add public/assets/library/products
-          git commit -m 'Build first ASH website product asset set' || echo 'No changes'
+          git add public/assets/library/products public/assets/library/derived/product-review
+          git commit -m 'Refine ASH product cutouts and website assets' || echo 'No changes'
           git push
+      - name: Upload product review
+        uses: actions/upload-artifact@v4
+        with:
+          name: ash-product-review-final
+          path: public/assets/library/derived/product-review/product-processed-preview.jpg
