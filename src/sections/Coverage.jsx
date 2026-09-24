@@ -1,8 +1,8 @@
 const products = [
-  { image: '/assets/library/derived/ash-product-cover-card.png', title: 'Clutch Cover', subtitle: 'PRESSURE PLATE ASSEMBLY' },
-  { image: '/assets/library/derived/ash-product-disc-card.png', title: 'Driven Disc', subtitle: 'FRICTION DISC' },
-  { image: '/assets/library/derived/ash-product-bearing-card.png', title: 'Release Bearing', subtitle: 'RELEASE SYSTEM' },
-  { image: '/assets/library/derived/ash-product-components-card.png', title: 'Other Components', subtitle: 'SUPPORTING PARTS' },
+  { image: '/assets/library/products/clutch-cover-01.webp', title: 'Clutch Cover', subtitle: 'PRESSURE PLATE ASSEMBLY' },
+  { image: '/assets/library/products/clutch-disc-01.webp', title: 'Driven Disc', subtitle: 'FRICTION DISC' },
+  { image: '/assets/library/products/release-bearing-front-01.webp', title: 'Release Bearing', subtitle: 'RELEASE SYSTEM' },
+  { image: '/assets/library/products/hydraulic-bearing-front-01.webp', title: 'Hydraulic Bearing', subtitle: 'HYDRAULIC RELEASE SYSTEM' },
 ]
 
 function Coverage() {
