@@ -35,8 +35,12 @@ jobs:
           arr=np.array(hero)
           bgr=cv2.cvtColor(arr, cv2.COLOR_RGB2BGR)
           masks=[
+            # Remove the baked-in left editorial copy because the live HTML provides it.
             (65,92,330,350),
-            (1190,55,1470,180),
+            # Remove only the baked-in right-side copy and underline.
+            # Do NOT erase the surrounding light/water background.
+            (1212,50,1462,91),
+            (1370,97,1444,112),
           ]
           mask=np.zeros(bgr.shape[:2],np.uint8)
           for xa,ya,xb,yb in masks:
