@@ -17,129 +17,183 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install image tools
         run: python -m pip install pillow opencv-python-headless
-      - name: Clean and export product assets
+      - name: Build cutouts and editorial product compositions
         run: |
           python - <<'PY'
-          import cv2
-          import numpy as np
-          from PIL import Image
+          import cv2, math, numpy as np
+          from PIL import Image, ImageDraw, ImageFilter
           from pathlib import Path
 
           srcdir=Path('public/assets/library/originals/products')
-          out=Path('public/assets/library/products')
-          out.mkdir(parents=True,exist_ok=True)
+          cutout_dir=Path('public/assets/library/products')
+          editorial_dir=Path('public/assets/library/derived/products')
+          cutout_dir.mkdir(parents=True,exist_ok=True)
+          editorial_dir.mkdir(parents=True,exist_ok=True)
 
-          def clean(path, name, pad=22, max_side=1400):
-            img=cv2.imread(str(path),cv2.IMREAD_COLOR)
-            if img is None:
-              raise SystemExit(f'Cannot read {path}')
-            rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-            h,w=rgb.shape[:2]
+          def extract_cutout(path, pad=24, max_side=1500):
+              img=cv2.imread(str(path),cv2.IMREAD_COLOR)
+              if img is None:
+                  raise SystemExit(f'Cannot read {path}')
+              rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+              h,w=rgb.shape[:2]
+              gray=cv2.cvtColor(rgb,cv2.COLOR_RGB2GRAY)
+              mx=rgb.max(axis=2)
+              mn=rgb.min(axis=2)
 
-            # Build a background-aware initial mask for the photographed white/paper stage.
-            gray=cv2.cvtColor(rgb,cv2.COLOR_RGB2GRAY)
-            mx=rgb.max(axis=2)
-            mn=rgb.min(axis=2)
-            bg=((gray>246)&((mx-mn)<12)).astype(np.uint8)
-            fg=((gray<205)|((mx-mn)>28)).astype(np.uint8)
+              bg=((gray>246)&((mx-mn)<14)).astype(np.uint8)
+              fg=((gray<205)|((mx-mn)>26)).astype(np.uint8)
 
-            mask=np.full((h,w),cv2.GC_PR_BGD,np.uint8)
-            mask[bg==1]=cv2.GC_BGD
-            mask[fg==1]=cv2.GC_PR_FGD
+              mask=np.full((h,w),cv2.GC_PR_BGD,np.uint8)
+              mask[bg==1]=cv2.GC_BGD
+              mask[fg==1]=cv2.GC_PR_FGD
+              mask[:10,:]=cv2.GC_BGD
+              mask[-10:,:]=cv2.GC_BGD
+              mask[:,:10]=cv2.GC_BGD
+              mask[:,-10:]=cv2.GC_BGD
 
-            # Force a narrow border to background so the paper margin never becomes foreground.
-            mask[:8,:]=cv2.GC_BGD
-            mask[-8:,:]=cv2.GC_BGD
-            mask[:,:8]=cv2.GC_BGD
-            mask[:,-8:]=cv2.GC_BGD
+              bgd=np.zeros((1,65),np.float64)
+              fgd=np.zeros((1,65),np.float64)
+              cv2.grabCut(rgb,mask,None,bgd,fgd,7,cv2.GC_INIT_WITH_MASK)
 
-            bgd=np.zeros((1,65),np.float64)
-            fgd=np.zeros((1,65),np.float64)
-            cv2.grabCut(rgb,mask,None,bgd,fgd,7,cv2.GC_INIT_WITH_MASK)
+              alpha=np.where(
+                  (mask==cv2.GC_FGD)|(mask==cv2.GC_PR_FGD),255,0
+              ).astype(np.uint8)
+              alpha=cv2.GaussianBlur(alpha,(0,0),0.7)
 
-            alpha=np.where(
-              (mask==cv2.GC_FGD)|(mask==cv2.GC_PR_FGD),255,0
-            ).astype(np.uint8)
-            alpha=cv2.GaussianBlur(alpha,(0,0),0.65)
+              ys,xs=np.where(alpha>22)
+              if len(xs)==0:
+                  raise SystemExit(f'No foreground found in {path}')
 
-            ys,xs=np.where(alpha>24)
-            if len(xs)==0:
-              raise SystemExit(f'No foreground found in {path}')
+              x0=max(0,int(xs.min())-pad)
+              x1=min(w,int(xs.max())+pad+1)
+              y0=max(0,int(ys.min())-pad)
+              y1=min(h,int(ys.max())+pad+1)
 
-            x0=max(0,int(xs.min())-pad)
-            x1=min(w,int(xs.max())+pad+1)
-            y0=max(0,int(ys.min())-pad)
-            y1=min(h,int(ys.max())+pad+1)
+              crop=rgb[y0:y1,x0:x1]
+              acrop=alpha[y0:y1,x0:x1]
 
-            crop=rgb[y0:y1,x0:x1]
-            acrop=alpha[y0:y1,x0:x1]
+              scale=min(1.0,max_side/max(crop.shape[1],crop.shape[0]))
+              if scale<1:
+                  crop=cv2.resize(crop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
+                  acrop=cv2.resize(acrop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
 
-            scale=min(1.0,max_side/max(crop.shape[1],crop.shape[0]))
-            if scale<1:
-              crop=cv2.resize(crop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
-              acrop=cv2.resize(acrop,None,fx=scale,fy=scale,interpolation=cv2.INTER_AREA)
+              return Image.fromarray(np.dstack([crop,acrop]).astype(np.uint8),'RGBA')
 
-            rgba=np.dstack([crop,acrop])
-            Image.fromarray(rgba,'RGBA').save(
-              out/name,'WEBP',quality=84,method=6
-            )
+          def leaf_shadow(size=(1000,780), angle=-18, alpha=34):
+              w,h=size
+              layer=Image.new('RGBA',(w,h),(0,0,0,0))
+              draw=ImageDraw.Draw(layer)
 
-          clean(srcdir/'压盘.jpg','clutch-cover-01.webp',26)
-          clean(srcdir/'从动盘.jpg','clutch-disc-01.webp',26)
-          clean(srcdir/'分离轴承-正面.jpg','release-bearing-front-01.webp',22)
-          clean(srcdir/'分离轴承-侧面.jpg','release-bearing-side-01.webp',22)
-          clean(srcdir/'分离轴承背面.jpg','release-bearing-back-01.webp',22)
-          clean(srcdir/'其它零件-导向轴承1.jpg','pilot-bearing-01.webp',20)
+              cx,cy=w*.52,h*.59
+              length=w*.50
+              width=h*.20
+              pts=[]
+              for i in range(41):
+                  t=i/40
+                  x=cx-length/2+length*t
+                  y=cy-width*math.sin(math.pi*t)
+                  pts.append((x,y))
+              for i in range(40,-1,-1):
+                  t=i/40
+                  x=cx-length/2+length*t
+                  y=cy+width*math.sin(math.pi*t)
+                  pts.append((x,y))
+              draw.polygon(pts,fill=(32,63,54,alpha))
+              vein=Image.new('RGBA',(w,h),(0,0,0,0))
+              vd=ImageDraw.Draw(vein)
+              vd.line([(cx-length/2+20,cy),(cx+length/2-20,cy)],fill=(32,63,54,int(alpha*.75)),width=2)
+              for offset in (-1,1):
+                  vd.arc(
+                      (cx-length*.10,cy-width*.55,cx+length*.65,cy+width*.55),
+                      180 if offset<0 else 0,
+                      250 if offset<0 else 70,
+                      fill=(32,63,54,int(alpha*.32)),
+                      width=2
+                  )
+              layer=Image.alpha_composite(layer,vein).rotate(angle,Image.Resampling.BICUBIC,expand=False)
+              return layer.filter(ImageFilter.GaussianBlur(15))
 
-          # Hydraulic bearing source is a four-view board. Keep one clean view and then process it.
-          board=Image.open(srcdir/'液压轴承-四面图.jpg').convert('RGB')
-          w,h=board.size
-          q=board.crop((int(w*.03),int(h*.03),int(w*.49),int(h*.49)))
-          qpath=out/'_hydraulic-source.png'
-          q.save(qpath)
-          clean(qpath,'hydraulic-bearing-front-01.webp',20)
-          qpath.unlink(missing_ok=True)
+          def editorial(cutout, name, rotation=0, scale=.72, xshift=0, yshift=-12):
+              W,H=1000,780
+              canvas=Image.new('RGBA',(W,H),(0,0,0,0))
 
-          print('Exported optimized ASH product assets')
-          PY
-      - name: Build product review preview
-        run: |
-          python - <<'PY'
-          from PIL import Image, ImageOps, ImageDraw
-          from pathlib import Path
-          src=Path('public/assets/library/products')
-          names=[
-            ('CLUTCH COVER','clutch-cover-01.webp'),
-            ('DRIVEN DISC','clutch-disc-01.webp'),
-            ('RELEASE BEARING','release-bearing-front-01.webp'),
-            ('HYDRAULIC BEARING','hydraulic-bearing-front-01.webp'),
-            ('PILOT BEARING','pilot-bearing-01.webp'),
+              # The leaf is a visual shadow motif, not a decorative sticker.
+              canvas=Image.alpha_composite(canvas,leaf_shadow((W,H),angle=rotation-4,alpha=32))
+
+              # Grounding shadow keeps the product physical.
+              ground=Image.new('RGBA',(W,H),(0,0,0,0))
+              gd=ImageDraw.Draw(ground)
+              gd.ellipse((W*.22,H*.59,W*.78,H*.74),fill=(20,42,38,34))
+              ground=ground.filter(ImageFilter.GaussianBlur(18))
+              canvas=Image.alpha_composite(canvas,ground)
+
+              product=cutout.copy()
+              maxdim=max(product.size)
+              target=max(80,int(min(W,H)*scale))
+              product.thumbnail((target,target),Image.Resampling.LANCZOS)
+              product=product.rotate(rotation,Image.Resampling.BICUBIC,expand=True)
+
+              px=int((W-product.width)/2+xshift)
+              py=int((H-product.height)/2+yshift)
+              canvas.alpha_composite(product,(px,py))
+
+              canvas.save(editorial_dir/name,'WEBP',quality=88,method=6)
+              return canvas
+
+          cover=extract_cutout(srcdir/'压盘.jpg',26)
+          disc=extract_cutout(srcdir/'从动盘.jpg',26)
+          release=extract_cutout(srcdir/'分离轴承-侧面.jpg',22)
+          hydraulic_board=Image.open(srcdir/'液压轴承-四面图.jpg').convert('RGB')
+          bw,bh=hydraulic_board.size
+          hydraulic_crop=hydraulic_board.crop((int(bw*.03),int(bh*.03),int(bw*.49),int(bh*.49)))
+          hydraulic_tmp=cutout_dir/'_hydraulic-source.png'
+          hydraulic_crop.save(hydraulic_tmp)
+          hydraulic=extract_cutout(hydraulic_tmp,20)
+          hydraulic_tmp.unlink(missing_ok=True)
+
+          # Also retain clean, transparent component assets for later product detail pages.
+          for cutout,name in [
+              (cover,'clutch-cover-01.webp'),
+              (disc,'clutch-disc-01.webp'),
+              (release,'release-bearing-side-01.webp'),
+              (hydraulic,'hydraulic-bearing-front-01.webp'),
+          ]:
+              cutout.save(cutout_dir/name,'WEBP',quality=84,method=6)
+
+          editorial(cover,'clutch-cover-editorial.webp',rotation=-11,scale=.67,xshift=-8,yshift=-5)
+          editorial(disc,'clutch-disc-editorial.webp',rotation=9,scale=.66,xshift=5,yshift=-2)
+          editorial(release,'release-bearing-editorial.webp',rotation=-15,scale=.57,xshift=12,yshift=-8)
+          editorial(hydraulic,'hydraulic-bearing-editorial.webp',rotation=12,scale=.57,xshift=-8,yshift=-10)
+
+          # Build a visual QA sheet using the same assets that the website will display.
+          labels=[
+              ('CLUTCH COVER','clutch-cover-editorial.webp'),
+              ('DRIVEN DISC','clutch-disc-editorial.webp'),
+              ('RELEASE BEARING','release-bearing-editorial.webp'),
+              ('HYDRAULIC BEARING','hydraulic-bearing-editorial.webp'),
           ]
-          out=Path('public/assets/library/derived/product-review')
-          out.mkdir(parents=True,exist_ok=True)
-          cards=[]
-          for label,name in names:
-            im=Image.open(src/name).convert('RGBA')
-            canvas=Image.new('RGBA',(620,460),(245,243,236,255))
-            thumb=ImageOps.contain(im,(560,360))
-            canvas.alpha_composite(thumb,((620-thumb.width)//2,20))
-            d=ImageDraw.Draw(canvas)
-            d.text((24,415),label,fill=(18,54,66,255))
-            cards.append(canvas.convert('RGB'))
-          sheet=Image.new('RGB',(1240,1380),(232,229,220))
-          for i,c in enumerate(cards):
-            sheet.paste(c,((i%2)*620,(i//2)*460))
-          sheet.save(out/'product-processed-preview.jpg',quality=93)
+          sheet=Image.new('RGB',(2000,1320),(235,232,223))
+          for i,(label,name) in enumerate(labels):
+              card=Image.open(editorial_dir/name).convert('RGBA')
+              bg=Image.new('RGBA',(1000,660),(235,232,223,255))
+              bg.alpha_composite(card.resize((1000,780),Image.Resampling.LANCZOS).crop((0,60,1000,720)),(0,0))
+              bg=bg.convert('RGB')
+              d=ImageDraw.Draw(bg)
+              d.text((34,610),label,fill=(18,45,56))
+              sheet.paste(bg,((i%2)*1000,(i//2)*660))
+          sheet.save(editorial_dir/'product-editorial-review.jpg',quality=93)
+
+          print('Built ASH editorial product compositions')
           PY
       - name: Commit website assets
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add public/assets/library/products public/assets/library/derived/product-review
-          git commit -m 'Refine ASH product cutouts and website assets' || echo 'No changes'
+          git add public/assets/library/products public/assets/library/derived/products
+          git commit -m 'Create ASH editorial product compositions' || echo 'No changes'
           git push
       - name: Upload product review
         uses: actions/upload-artifact@v4
         with:
-          name: ash-product-review-final
-          path: public/assets/library/derived/product-review/product-processed-preview.jpg
+          name: ash-product-editorial-review
+          path: public/assets/library/derived/products/product-editorial-review.jpg
