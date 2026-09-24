@@ -191,36 +191,32 @@ button,a{font:inherit}
 }
 .product-grid{
   display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:12px;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
   align-items:start;
 }
 .product-card{
   position:relative;
   min-width:0;
-  padding:0 0 16px;
+  padding:0 0 17px;
   background:#ebe8df;
   overflow:hidden;
   transition:transform .25s ease,background .25s ease;
 }
 .product-card:hover{transform:translateY(-3px);background:#e6e2d8}
-.product-card--featured{grid-column:span 2}
 .product-image{
-  height:205px;
+  height:248px;
   overflow:hidden;
   display:flex;
   align-items:center;
   justify-content:center;
   background:#ebe8df;
 }
-.product-card--featured .product-image{height:255px}
 .product-image img{
   width:100%;
   height:100%;
-  object-fit:contain;
-  padding:22px;
+  object-fit:cover;
 }
-.product-card--featured .product-image img{padding:18px 28px}
 .product-card-copy{min-height:55px}
 .product-card h3{margin:14px 16px 0;font-size:13px;line-height:1.35;font-weight:500;color:#102d38}
 .product-card p{margin:5px 16px 0;font-size:8px;line-height:1.45;letter-spacing:.1em;color:#718087}
@@ -282,8 +278,7 @@ button,a{font:inherit}
   .products-section{grid-template-columns:1fr}
   .products-intro{padding-right:0}
   .products-copy{max-width:560px}
-  .product-grid{grid-template-columns:repeat(3,1fr)}
-  .product-card--featured{grid-column:span 2}
+  .product-grid{grid-template-columns:repeat(4,1fr)}
 }
 @media(max-width:760px){
   .site-header{height:68px;padding:0 20px}
@@ -302,9 +297,7 @@ button,a{font:inherit}
   .feature-item:nth-child(3),.feature-item:nth-child(4){border-bottom:0}
   .products-section{padding:42px 20px}
   .product-grid{grid-template-columns:1fr 1fr}
-  .product-card--featured{grid-column:span 2}
-  .product-image,.product-card--featured .product-image{height:190px}
-  .product-image img,.product-card--featured .product-image img{padding:16px}
+  .product-image{height:205px}
   .contact-section{grid-template-columns:1fr;padding:75px 24px;gap:38px}
   .contact-side{justify-self:start}
   .site-footer{grid-template-columns:1fr;gap:20px}
@@ -319,8 +312,7 @@ button,a{font:inherit}
   .hero-copy{padding-top:38px}
   .hero-copy h1{font-size:49px}
   .product-grid{grid-template-columns:1fr}
-  .product-card--featured{grid-column:span 1}
-  .product-image,.product-card--featured .product-image{height:210px}
+  .product-image{height:210px}
   .feature-item img{width:28px;height:28px}
   .feature-item h3{font-size:9px}
   .feature-item p{font-size:10px}
