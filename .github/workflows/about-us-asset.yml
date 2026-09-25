@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'public/assets/library/originals/website-reference/草图.png'
+      - 'public/assets/library/originals/website-reference/草图3.png'
       - '.github/workflows/about-us-asset.yml'
   workflow_dispatch:
 
