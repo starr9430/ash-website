@@ -31,11 +31,8 @@ jobs:
           out = Path('public/assets/library/derived/about')
           out.mkdir(parents=True, exist_ok=True)
 
-          im = Image.open(src)
-          im.load()
-
-          if im.mode not in ('RGB', 'RGBA'):
-              im = im.convert('RGBA' if 'A' in im.getbands() else 'RGB')
+          im = Image.open(src).convert('RGB')
+          original_size = im.size
 
           if max(im.size) > 1800:
               im.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
@@ -48,9 +45,9 @@ jobs:
           )
 
           print(f'Source: {src}')
-          print(f'Original size: {Image.open(src).size}')
-          print(f'Output size: {im.size}')
-          print(f'Output mode: {im.mode}')
+          print(f'Original size: {original_size}')
+          print(f'Web size: {im.size}')
+          print(f'Web mode: {im.mode}')
           print(f'Output: {out / "ash-about-mark.webp"}')
           PY
 
@@ -59,5 +56,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add public/assets/library/derived/about/ash-about-mark.webp
-          git commit -m 'Build About Us asset from sketch source' || echo 'No changes'
+          git commit -m 'Use 草图 About Us artwork asset' || echo 'No changes'
           git push
