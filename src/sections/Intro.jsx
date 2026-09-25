@@ -18,9 +18,10 @@ function Intro() {
         </div>
 
         <div className="about-art" aria-hidden="true">
-          <img className="about-ring" src="/images/brand/mechanical-ring.svg" alt="" />
-          <img className="about-leaf" src="/images/brand/leaf-vein.svg" alt="" />
-          <img className="about-water" src="/images/brand/water-ribbon.svg" alt="" />
+          <img
+            src="/assets/library/originals/website-reference/About Us.png"
+            alt=""
+          />
         </div>
 
         <div className="about-copy">
@@ -38,20 +39,35 @@ function Intro() {
 
       <div className="about-rail">
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--fit" aria-hidden="true">
-            <i />
+          <span className="about-point-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+              <circle cx="16" cy="16" r="11.5" />
+              <circle cx="16" cy="16" r="4" />
+              <path d="M16 2.5v6M16 23.5v6M2.5 16h6M23.5 16h6" />
+            </svg>
           </span>
           <span>CLEAR FITMENT</span>
         </div>
+
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--supply" aria-hidden="true">
-            <i />
+          <span className="about-point-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+              <circle cx="16" cy="16" r="5.5" />
+              <path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M25.2 6.8l-2.8 2.8M9.6 22.4l-2.8 2.8" />
+              <path d="M16 7.8a8.2 8.2 0 1 1-5.8 2.4" />
+            </svg>
           </span>
           <span>PRACTICAL SUPPLY</span>
         </div>
+
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--direct" aria-hidden="true">
-            <i />
+          <span className="about-point-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+              <path d="M9 8.5h14A5.5 5.5 0 0 1 28.5 14v4A5.5 5.5 0 0 1 23 23.5h-7.2l-5.9 4v-4A5.5 5.5 0 0 1 5.5 18v-4A5.5 5.5 0 0 1 11 8.5Z" />
+              <circle cx="12" cy="16" r="1.2" />
+              <circle cx="16" cy="16" r="1.2" />
+              <circle cx="20" cy="16" r="1.2" />
+            </svg>
           </span>
           <span>DIRECT COMMUNICATION</span>
         </div>
