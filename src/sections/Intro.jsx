@@ -1,6 +1,14 @@
 function Intro() {
   return (
     <section className="about-band" id="about">
+      <div className="about-top">
+        <img
+          className="about-logo"
+          src="/assets/library/brand/ash-logo-approved.png"
+          alt="ASH"
+        />
+      </div>
+
       <div className="about-main">
         <div className="about-heading">
           <h2>
@@ -9,43 +17,10 @@ function Intro() {
           </h2>
         </div>
 
-        <div className="about-art" aria-label="ASH clutch components">
-          <div className="about-product about-product--cover">
-            <img
-              src="/assets/library/derived/products/clutch-cover-editorial.webp"
-              alt="ASH clutch cover assembly"
-            />
-          </div>
-          <div className="about-product about-product--disc">
-            <img
-              src="/assets/library/derived/products/clutch-disc-editorial.webp"
-              alt="ASH driven disc"
-            />
-          </div>
-          <div className="about-product about-product--bearing">
-            <img
-              src="/assets/library/derived/products/release-bearing-editorial.webp"
-              alt="ASH release bearing"
-            />
-          </div>
-          <img
-            className="about-leaf"
-            src="/images/brand/leaf-vein.svg"
-            alt=""
-            aria-hidden="true"
-          />
-          <img
-            className="about-water"
-            src="/images/brand/water-ribbon.svg"
-            alt=""
-            aria-hidden="true"
-          />
-          <img
-            className="about-art-logo"
-            src="/assets/library/brand/ash-logo-approved.png"
-            alt=""
-            aria-hidden="true"
-          />
+        <div className="about-art" aria-hidden="true">
+          <img className="about-ring" src="/images/brand/mechanical-ring.svg" alt="" />
+          <img className="about-leaf" src="/images/brand/leaf-vein.svg" alt="" />
+          <img className="about-water" src="/images/brand/water-ribbon.svg" alt="" />
         </div>
 
         <div className="about-copy">
@@ -63,15 +38,15 @@ function Intro() {
 
       <div className="about-rail">
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--fit" aria-hidden="true">○</span>
+          <span className="about-point-icon about-point-icon--fit" aria-hidden="true">◎</span>
           <span>CLEAR FITMENT</span>
         </div>
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--supply" aria-hidden="true">◇</span>
+          <span className="about-point-icon about-point-icon--supply" aria-hidden="true">⚙</span>
           <span>PRACTICAL SUPPLY</span>
         </div>
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--direct" aria-hidden="true">—</span>
+          <span className="about-point-icon about-point-icon--direct" aria-hidden="true">•••</span>
           <span>DIRECT COMMUNICATION</span>
         </div>
       </div>
