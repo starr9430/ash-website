@@ -27,7 +27,7 @@ jobs:
           from pathlib import Path
           from PIL import Image
 
-          src = Path('public/assets/library/originals/website-reference/草图.png')
+          src = Path('public/assets/library/originals/website-reference/草图3.png')
           out = Path('public/assets/library/derived/about')
           out.mkdir(parents=True, exist_ok=True)
 
@@ -56,5 +56,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add public/assets/library/derived/about/ash-about-mark.webp
-          git commit -m 'Use 草图 About Us artwork asset' || echo 'No changes'
+          git commit -m 'Build WebP from 草图3 About Us asset' || echo 'No changes'
           git push
