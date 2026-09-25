@@ -29,7 +29,7 @@ function Intro() {
         <div className="about-copy">
           <div className="about-rule" />
           <p className="about-lead">
-            ASH is a China-based clutch brand built for global markets.
+            Ashlira is a China-based clutch brand built for global markets.
           </p>
           <p>
             We specialize in clutch systems and help overseas buyers turn vehicle,
