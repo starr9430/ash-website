@@ -346,7 +346,7 @@ button,a{font:inherit}
 }
 
 
-/* About Us — based on the approved visual reference */
+/* About Us — derived artwork + independent typography */
 .about-band{
   position:relative;
   isolation:isolate;
@@ -402,49 +402,19 @@ button,a{font:inherit}
 }
 .about-art{
   position:absolute;
-  z-index:1;
-  left:5%;
-  top:-4%;
-  width:65%;
-  height:108%;
-  overflow:hidden;
+  z-index:2;
+  left:2%;
+  top:2%;
+  width:min(67%,790px);
   pointer-events:none;
 }
 .about-art img{
-  position:absolute;
-  width:clamp(1180px,112vw,1870px);
-  max-width:none;
+  display:block;
+  width:100%;
   height:auto;
-  left:clamp(-520px,-31vw,-300px);
-  top:clamp(-125px,-8vw,-72px);
-  opacity:.98;
+  max-width:none;
   mix-blend-mode:multiply;
-  filter:saturate(.92);
-  clip-path:polygon(
-    3% 75%,
-    18% 61%,
-    29% 54%,
-    38% 47%,
-    45% 35%,
-    51% 23%,
-    59% 12%,
-    68% 4%,
-    76% 1%,
-    82% 3%,
-    75% 13%,
-    70% 23%,
-    68% 31%,
-    73% 39%,
-    79% 45%,
-    83% 55%,
-    85% 70%,
-    78% 86%,
-    65% 96%,
-    47% 95%,
-    28% 91%,
-    13% 87%,
-    3% 88%
-  );
+  opacity:.96;
 }
 .about-copy{
   position:relative;
@@ -525,7 +495,7 @@ button,a{font:inherit}
   }
   .about-heading{padding-top:82px}
   .about-heading h2{font-size:clamp(52px,6.7vw,78px)}
-  .about-art{left:0;width:66%}
+  .about-art{left:0;width:67%}
   .about-copy{padding-top:92px}
 }
 @media(max-width:760px){
@@ -553,14 +523,8 @@ button,a{font:inherit}
     position:relative;
     left:auto;
     top:auto;
-    width:100%;
-    height:255px;
-    margin:6px 0 4px;
-  }
-  .about-art img{
-    width:1120px;
-    left:-285px;
-    top:-64px;
+    width:112%;
+    margin:10px 0 -10px -8%;
   }
   .about-copy{
     padding:0;
