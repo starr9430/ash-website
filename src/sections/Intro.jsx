@@ -1,6 +1,6 @@
 function Intro() {
   return (
-    <section className="intro-band" id="solutions">
+    <section className="intro-band" id="about">
       <div className="section-kicker">01 / THE ASH APPROACH</div>
       <div className="intro-grid">
         <h2>Nature gives the direction.<br /><em>Engineering gives it form.</em></h2>
