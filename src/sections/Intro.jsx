@@ -38,15 +38,21 @@ function Intro() {
 
       <div className="about-rail">
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--fit" aria-hidden="true">◎</span>
+          <span className="about-point-icon about-point-icon--fit" aria-hidden="true">
+            <i />
+          </span>
           <span>CLEAR FITMENT</span>
         </div>
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--supply" aria-hidden="true">⚙</span>
+          <span className="about-point-icon about-point-icon--supply" aria-hidden="true">
+            <i />
+          </span>
           <span>PRACTICAL SUPPLY</span>
         </div>
         <div className="about-point">
-          <span className="about-point-icon about-point-icon--direct" aria-hidden="true">•••</span>
+          <span className="about-point-icon about-point-icon--direct" aria-hidden="true">
+            <i />
+          </span>
           <span>DIRECT COMMUNICATION</span>
         </div>
       </div>
