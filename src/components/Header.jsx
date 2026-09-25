@@ -9,7 +9,7 @@ function Header() {
       <nav>
         <a className="active" href="#top">HOME</a>
         <a href="#products">PRODUCTS</a>
-        <a href="#about">ABOUT US</a>
+        <a href="#products">ABOUT US</a>
         <a href="#contact">CONTACT</a>
       </nav>
       <div className="header-meta">

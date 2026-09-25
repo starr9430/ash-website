@@ -6,7 +6,7 @@ function Footer() {
         <span>ASHLIRA AUTOMOTIVE PARTS CO., LTD.</span>
       </div>
       <nav>
-        <a href="#top">Home</a><i /> <a href="#products">Products</a><i /> <a href="#products">About Us</a><i /> <a href="#contact">Contact</a>
+        <a href="#top">Home</a><i /> <a href="#products">Products</a><i /> <a href="#about">About Us</a><i /> <a href="#contact">Contact</a>
       </nav>
       <div className="footer-contact">
         <a href="mailto:starr@ashlira.com">✉ &nbsp; starr@ashlira.com</a>
