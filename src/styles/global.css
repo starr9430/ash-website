@@ -389,7 +389,7 @@ button,a{font:inherit}
   margin:0;
   max-width:720px;
   font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(56px,5.8vw,94px);
+  font-size:clamp(37px,3.87vw,63px);
   line-height:.9;
   font-weight:500;
   letter-spacing:-.058em;
@@ -494,7 +494,7 @@ button,a{font:inherit}
     min-height:500px;
   }
   .about-heading{padding-top:82px}
-  .about-heading h2{font-size:clamp(52px,6.7vw,78px)}
+  .about-heading h2{font-size:clamp(35px,4.47vw,52px)}
   .about-art{left:0;width:67%}
   .about-copy{padding-top:92px}
 }
@@ -515,7 +515,7 @@ button,a{font:inherit}
     align-self:flex-start;
   }
   .about-heading h2{
-    font-size:clamp(48px,10.8vw,68px);
+    font-size:clamp(32px,7.2vw,45px);
     line-height:.95;
   }
   .about-heading h2 em{white-space:normal}
