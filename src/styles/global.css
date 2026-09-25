@@ -396,9 +396,16 @@ button,a{font:inherit}
   color:#123642;
 }
 .about-heading h2 em{
+  display:block;
   font-style:italic;
   font-weight:500;
   white-space:nowrap;
+}
+.about-heading h2 span{
+  display:block;
+}
+.about-heading h2 .about-heading-gap{
+  margin-top:clamp(22px,2.2vw,34px);
 }
 .about-art{
   position:absolute;
