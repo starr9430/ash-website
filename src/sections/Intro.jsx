@@ -12,8 +12,10 @@ function Intro() {
       <div className="about-main">
         <div className="about-heading">
           <h2>
-            Nature gives the direction.<br />
-            <em>Engineering gives it form.</em>
+            <span>Nature gives</span>
+            <em>the direction.</em>
+            <span className="about-heading-gap">Engineering gives</span>
+            <em>it form.</em>
           </h2>
         </div>
 
