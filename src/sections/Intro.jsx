@@ -12,8 +12,8 @@ function Intro() {
       <div className="about-main">
         <div className="about-heading">
           <h2>
-            Built around<br />
-            <em>the application.</em>
+            Nature gives the direction.<br />
+            <em>Engineering gives it form.</em>
           </h2>
         </div>
 
