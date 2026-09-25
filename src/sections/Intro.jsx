@@ -19,7 +19,7 @@ function Intro() {
 
         <div className="about-art" aria-hidden="true">
           <img
-            src="/assets/library/originals/website-reference/About Us.png"
+            src="/assets/library/derived/ash-about-artwork.svg"
             alt=""
           />
         </div>
