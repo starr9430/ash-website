@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'public/assets/library/originals/website-reference/About Us-标志.png'
+      - 'public/assets/library/originals/website-reference/草图.png'
       - '.github/workflows/about-us-asset.yml'
   workflow_dispatch:
 
@@ -27,34 +27,30 @@ jobs:
           from pathlib import Path
           from PIL import Image
 
-          src = Path('public/assets/library/originals/website-reference/About Us-标志.png')
+          src = Path('public/assets/library/originals/website-reference/草图.png')
           out = Path('public/assets/library/derived/about')
           out.mkdir(parents=True, exist_ok=True)
 
           im = Image.open(src)
-          original_mode = im.mode
           im.load()
-
-          # Preserve the user-processed artwork exactly.
-          # Only constrain oversized raster dimensions and encode for the web.
-          if max(im.size) > 1800:
-              im.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
 
           if im.mode not in ('RGB', 'RGBA'):
               im = im.convert('RGBA' if 'A' in im.getbands() else 'RGB')
 
+          if max(im.size) > 1800:
+              im.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
+
           im.save(
               out / 'ash-about-mark.webp',
               'WEBP',
-              quality=90,
+              quality=92,
               method=6
           )
 
           print(f'Source: {src}')
           print(f'Original size: {Image.open(src).size}')
-          print(f'Original mode: {original_mode}')
-          print(f'Web size: {im.size}')
-          print(f'Web mode: {im.mode}')
+          print(f'Output size: {im.size}')
+          print(f'Output mode: {im.mode}')
           print(f'Output: {out / "ash-about-mark.webp"}')
           PY
 
@@ -63,5 +59,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add public/assets/library/derived/about/ash-about-mark.webp
-          git commit -m 'Add web-ready About Us artwork asset' || echo 'No changes'
+          git commit -m 'Build About Us asset from sketch source' || echo 'No changes'
           git push
