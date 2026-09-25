@@ -10,7 +10,7 @@ function Footer() {
       </nav>
       <div className="footer-contact">
         <a href="mailto:starr@ashlira.com">✉ &nbsp; starr@ashlira.com</a>
-        <span>© 2026 ASH. All rights reserved.</span>
+        <span>© 2026 ASHLIRA. All rights reserved.</span>
       </div>
       <img className="footer-leaf" src="/images/brand/footer-leaf.svg" alt="" />
     </footer>
