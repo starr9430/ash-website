@@ -1,30 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="160 120 940 640">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" role="img" aria-label="ASH abstract leaf and water mark">
   <defs>
-    <clipPath id="art">
-      <!-- upper leaf -->
-      <path d="M505 540
-        C585 505 655 450 690 365
-        C735 270 820 185 1015 125
-        C930 245 862 335 914 408
-        C970 486 1015 560 930 650
-        C800 640 635 590 505 540Z"/>
-      <!-- lower water -->
-      <path d="M160 748
-        C270 610 410 555 555 515
-        C675 482 760 430 850 387
-        C935 346 1020 365 1100 430
-        L1060 520
-        C982 458 914 430 832 462
-        C730 502 650 555 550 575
-        C405 605 300 665 220 760Z"/>
-      <!-- mechanical ring / construction marks -->
-      <circle cx="858" cy="520" r="126"/>
-      <circle cx="858" cy="520" r="158"/>
-      <path d="M858 150V700M600 520H1065"/>
-    </clipPath>
+    <linearGradient id="leaf" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#46553e"/>
+      <stop offset="0.55" stop-color="#64745a"/>
+      <stop offset="1" stop-color="#859177"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6f8267" stop-opacity=".72"/>
+      <stop offset=".5" stop-color="#8c9a80" stop-opacity=".58"/>
+      <stop offset="1" stop-color="#596d51" stop-opacity=".72"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2c302d" stop-opacity=".18"/>
+      <stop offset=".5" stop-color="#202320" stop-opacity=".52"/>
+      <stop offset="1" stop-color="#525854" stop-opacity=".22"/>
+    </linearGradient>
+    <filter id="soft" x="-12%" y="-12%" width="124%" height="124%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
   </defs>
-  <image href="/assets/library/originals/website-reference/About%20Us.png"
-         x="0" y="0" width="1672" height="941"
-         preserveAspectRatio="none"
-         clip-path="url(#art)"/>
+
+  <!-- complete upper leaf -->
+  <path
+    d="M470 552
+       C565 520 635 468 684 380
+       C736 286 824 184 1017 112
+       C950 236 872 325 906 397
+       C936 462 993 516 950 594
+       C895 692 676 653 470 552Z"
+    fill="url(#leaf)"
+    opacity=".88"/>
+
+  <!-- restrained inner leaf contour -->
+  <path
+    d="M535 535
+       C620 493 684 431 728 351
+       C773 270 843 203 947 152
+       C875 245 827 315 846 382
+       C862 436 905 484 892 536
+       C873 608 707 601 535 535Z"
+    fill="none"
+    stroke="#a0aa94"
+    stroke-width="3"
+    opacity=".42"/>
+
+  <!-- complete water ribbon: continuous, not clipped -->
+  <path
+    d="M96 681
+       C214 594 334 553 470 523
+       C589 497 690 451 790 402
+       C883 356 978 353 1090 424
+       C1058 458 1027 493 1003 528
+       C919 479 855 473 780 503
+       C679 544 590 582 478 604
+       C335 632 226 681 150 739Z"
+    fill="url(#water)"
+    opacity=".82"/>
+
+  <!-- water edge / flow line -->
+  <path
+    d="M118 688
+       C255 600 350 580 484 548
+       C606 519 704 473 796 429
+       C890 384 972 382 1064 432"
+    fill="none"
+    stroke="#c1c9b9"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    opacity=".46"/>
+
+  <!-- mechanical construction ring kept independent from organic forms -->
+  <g fill="none" stroke="url(#metal)" stroke-width="2.2" opacity=".8">
+    <circle cx="858" cy="526" r="126"/>
+    <circle cx="858" cy="526" r="158"/>
+    <path d="M858 170V706"/>
+    <path d="M605 526H1080"/>
+  </g>
+
+  <!-- small structural ticks -->
+  <g stroke="#313631" stroke-width="2" opacity=".34">
+    <path d="M858 334v18M858 682v18M666 526h18M1032 526h18"/>
+  </g>
+
+  <!-- subtle surface grain -->
+  <path d="M485 555C620 522 714 475 806 432" fill="none"
+        stroke="#e0e4da" stroke-width="1.5" opacity=".20" filter="url(#soft)"/>
 </svg>
