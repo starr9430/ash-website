@@ -1,7 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="180 130 900 620">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="160 120 940 640">
   <defs>
     <clipPath id="art">
-      <path d="M180 735V700C300 590 430 545 555 510C675 476 758 426 846 384C930 344 1000 354 1080 420V750Z"/>
+      <!-- upper leaf -->
+      <path d="M505 540
+        C585 505 655 450 690 365
+        C735 270 820 185 1015 125
+        C930 245 862 335 914 408
+        C970 486 1015 560 930 650
+        C800 640 635 590 505 540Z"/>
+      <!-- lower water -->
+      <path d="M160 748
+        C270 610 410 555 555 515
+        C675 482 760 430 850 387
+        C935 346 1020 365 1100 430
+        L1060 520
+        C982 458 914 430 832 462
+        C730 502 650 555 550 575
+        C405 605 300 665 220 760Z"/>
+      <!-- mechanical ring / construction marks -->
+      <circle cx="858" cy="520" r="126"/>
+      <circle cx="858" cy="520" r="158"/>
+      <path d="M858 150V700M600 520H1065"/>
     </clipPath>
   </defs>
   <image href="/assets/library/originals/website-reference/About%20Us.png"
