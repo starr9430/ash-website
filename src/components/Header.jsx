@@ -1,10 +1,8 @@
 function Header() {
-  const logoSrc = "/assets/library/brand/ash-logo-approved.png"
-
   return (
     <header className="site-header">
       <a className="header-logo" href="#top" aria-label="ASH home">
-        <img src={logoSrc} alt="ASH" />
+        <span aria-hidden="true" />
       </a>
       <nav>
         <a className="active" href="#top">HOME</a>
