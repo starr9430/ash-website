@@ -32,6 +32,7 @@ concurrency:
   group: ash-verify-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Verification is intentionally read-only: it validates the current main state without pushing changes.
 permissions:
   contents: read
 
