@@ -333,7 +333,7 @@ When this document conflicts with actual production code:
 - Legacy production components removed: `ClutchVisual.jsx`, `ProductVisual.jsx`, `Capability.jsx`.
 - Duplicate legacy brand path `public/images/brand/` retired; canonical path is `public/assets/brand/`.
 - Unused CSS rules removed: legacy logo image selectors and unused `.products-note`.
-- Historical/one-time GitHub Actions were reviewed. Design extraction was intentionally retained as a dormant manual utility because future pages may reuse the historical reference-extraction workflow. Its implementation is isolated under `tools/historical/`.
+- Historical GitHub Actions were reviewed. Reusable historical design/product tools are retained as dormant manual utilities under `tools/historical/`; one-time migration automation is not retained as a live workflow.
 - Final CI for the second-round cleanup must be treated as the acceptance gate before moving on.
 
 ## 13. Change log note
