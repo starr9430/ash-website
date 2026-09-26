@@ -1,0 +1,27 @@
+name: Historical Product Source Review
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install image tools
+        run: python -m pip install pillow
+      - name: Build contact sheet
+        run: python tools/historical/build-product-review.py
+      - name: Upload review sheet
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-product-source-review
+          path: historical-output/product-review/product-contact-sheet.jpg
