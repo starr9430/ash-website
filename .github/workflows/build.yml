@@ -12,6 +12,7 @@ on:
       - 'public/assets/**'
       - 'public/images/**'
       - 'scripts/check.mjs'
+      - 'scripts/check-assets.mjs'
       - '.github/workflows/build.yml'
   pull_request:
     paths:
@@ -23,6 +24,7 @@ on:
       - 'public/assets/**'
       - 'public/images/**'
       - 'scripts/check.mjs'
+      - 'scripts/check-assets.mjs'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
@@ -59,6 +61,9 @@ jobs:
 
       - name: Run static integrity check
         run: npm run check
+
+      - name: Run production asset check
+        run: npm run check-assets
 
       - name: Run production build
         run: npm run build
