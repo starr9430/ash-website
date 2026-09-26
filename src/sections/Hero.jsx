@@ -1,7 +1,7 @@
 function Hero() {
   return (
     <section className="hero" id="top">
-      <img className="hero-scene" src="/assets/library/derived/ash-hero-scene-clean.png" alt="" />
+      <img className="hero-scene" src="/assets/library/derived/ash-hero-scene-clean.webp" alt="" />
       <div className="hero-copy">
         <img className="hero-logo" src="/assets/library/brand/ash-logo-approved.png" alt="ASH" />
         <p className="hero-product-name">CLUTCH KIT</p>
