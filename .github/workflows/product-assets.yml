@@ -9,6 +9,10 @@ on:
       - '.github/workflows/product-assets.yml'
   workflow_dispatch:
 
+concurrency:
+  group: ash-product-assets
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -34,9 +38,13 @@ jobs:
 
       - name: Commit website assets
         run: |
+          set -e
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add public/assets/library/products public/assets/library/derived/products
-          git commit -m 'Rebuild final ASH product assets with corrected processing' || echo 'No changes'
-          git pull --rebase origin main
-          git push
+          if git diff --cached --quiet; then
+            echo 'No changes'
+            exit 0
+          fi
+          git commit -m 'Rebuild final ASH product assets with corrected processing'
+          git push origin HEAD:main
