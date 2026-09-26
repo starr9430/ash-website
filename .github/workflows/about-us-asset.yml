@@ -1,0 +1,27 @@
+name: Historical About Us Asset Builder
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install image tools
+        run: python -m pip install pillow
+      - name: Build review asset
+        run: python tools/historical/build-about-us-asset.py
+      - name: Upload review asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-about-us-review
+          path: historical-output/about/ash-about-mark.webp
