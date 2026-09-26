@@ -28,8 +28,12 @@ on:
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
+concurrency:
+  group: ash-verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   verify:
@@ -68,13 +72,6 @@ jobs:
       - name: Run production build
         run: npm run build
 
-      - name: Commit bootstrapped lockfile
+      - name: Report missing lockfile
         if: github.event_name == 'push' && steps.lock.outputs.created == 'true'
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add package-lock.json
-          git diff --cached --quiet && exit 0
-          git commit -m 'Lock npm dependencies'
-          git push origin HEAD:main
+        run: echo "::warning::package-lock.json was missing on main; the workflow generated one for this verification run but does not commit it."
