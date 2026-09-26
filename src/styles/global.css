@@ -561,34 +561,10 @@ button,a{font:inherit}
   .header-meta a:first-child,.header-meta>span{display:none}
   .header-meta a:last-child{display:block;white-space:nowrap;font-size:8px}
 
-  .hero{
-    min-height:640px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    background:#f4f1e8;
-  }
-  .hero-scene{
-    position:absolute;
-    top:auto;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:46%;
-    min-height:220px;
-    object-fit:cover;
-    object-position:68% center;
-  }
-  .hero-copy{
-    width:100%;
-    min-height:390px;
-    padding:34px 22px 0;
-    justify-content:flex-start;
-    background:linear-gradient(180deg,#f4f1e8 0%,#f4f1e8 78%,rgba(244,241,232,.96) 100%);
-  }
-  .hero-copy:before{
-    display:none;
-  }
+  .hero{min-height:620px;background:#f4f1e8}
+  .hero-scene{top:auto;bottom:0;height:61%;object-position:68% center}
+  .hero-copy{width:100%;min-height:335px;padding:34px 22px 0;justify-content:flex-start}
+  .hero-copy:before{width:100%;height:74%;background:linear-gradient(180deg,rgba(245,243,236,.97) 0%,rgba(245,243,236,.92) 48%,rgba(245,243,236,.62) 78%,rgba(245,243,236,0) 100%)}
   .hero-product-name{margin-top:10px;font-size:9px;letter-spacing:.30em}
   .hero-rule{width:42px;margin:14px 0 12px}
   .hero-copy h1{font-size:clamp(48px,13.5vw,58px);line-height:.88;letter-spacing:-.055em}
@@ -655,9 +631,9 @@ button,a{font:inherit}
   .site-header nav a{font-size:7.5px}
   .header-logo{width:40px;min-width:40px}
   .header-logo span::before{font-size:13px}
-  .hero{min-height:600px}
-  .hero-scene{height:44%;min-height:205px;object-position:69% center}
-  .hero-copy{min-height:370px;padding-left:19px;padding-right:19px}
+  .hero{min-height:590px}
+  .hero-scene{height:59%;object-position:69% center}
+  .hero-copy{min-height:320px;padding-left:19px;padding-right:19px}
   .hero-copy h1{font-size:46px}
   .product-grid{gap:8px}
   .product-image{height:164px}
