@@ -5,7 +5,6 @@ on:
     branches: [main]
     paths:
       - 'public/assets/library/derived/ash-hero-scene-clean.png'
-      - 'public/assets/library/brand/ash-logo-approved.png'
       - '.github/workflows/asset-optimize.yml'
   workflow_dispatch:
 
@@ -35,11 +34,6 @@ jobs:
                   Path('public/assets/library/derived/ash-hero-scene-clean.png'),
                   Path('public/assets/library/derived/ash-hero-scene-clean.webp'),
                   90,
-              ),
-              (
-                  Path('public/assets/library/brand/ash-logo-approved.png'),
-                  Path('public/assets/library/brand/ash-logo-approved.webp'),
-                  95,
               ),
           ]
 
@@ -83,18 +77,6 @@ jobs:
                   '/assets/library/derived/ash-hero-scene-clean.png':
                   '/assets/library/derived/ash-hero-scene-clean.webp',
               },
-              'src/components/Header.jsx': {
-                  '/assets/library/brand/ash-logo-approved.png':
-                  '/assets/library/brand/ash-logo-approved.webp',
-              },
-              'src/components/Footer.jsx': {
-                  '/assets/library/brand/ash-logo-approved.png':
-                  '/assets/library/brand/ash-logo-approved.webp',
-              },
-              'src/sections/Intro.jsx': {
-                  '/assets/library/brand/ash-logo-approved.png':
-                  '/assets/library/brand/ash-logo-approved.webp',
-              },
           }
 
           for filename, pairs in replacements.items():
@@ -111,7 +93,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add             public/assets/library/derived/ash-hero-scene-clean.webp             public/assets/library/brand/ash-logo-approved.webp             src/sections/Hero.jsx             src/components/Header.jsx             src/components/Footer.jsx             src/sections/Intro.jsx
+          git add public/assets/library/derived/ash-hero-scene-clean.webp src/sections/Hero.jsx
           if git diff --cached --quiet; then
             echo 'No changes'
             exit 0
