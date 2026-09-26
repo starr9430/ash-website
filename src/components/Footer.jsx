@@ -2,7 +2,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-brand">
-        <img src="/assets/library/brand/ash-logo-approved.png" alt="ASH" />
+        <span className="footer-brand-logo" aria-hidden="true" />
         <span>ASHLIRA AUTOMOTIVE PARTS CO., LTD.</span>
       </div>
       <nav>
