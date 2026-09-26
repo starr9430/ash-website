@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ash-product-assets
+  group: ash-asset-writes
   cancel-in-progress: false
 
 permissions:
