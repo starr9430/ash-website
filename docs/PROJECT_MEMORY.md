@@ -210,13 +210,26 @@ Purpose:
 
 ### Phase 3 — 代码收口
 
-Current phase when explicitly started.
+Current phase.
 
 Order:
 
-1. 死组件扫描
-2. 清理旧代码
-3. 统一品牌资源路径
+1. 死组件扫描 — completed
+2. 清理旧代码 — completed for the identified legacy component/CSS/workflow set
+3. 统一品牌资源路径 — completed
+
+Second-round cleanup also reviewed historical CSS, image-processing scripts, and GitHub Actions.
+
+Retired workflows:
+- `.github/workflows/about-us-asset.yml` — historical About Us asset generator; retired because the current prepared artwork is the accepted production source and this workflow could overwrite it from an older sketch.
+- `.github/workflows/extract-design-assets.yml` — one-time design-reference extraction/migration workflow.
+- `.github/workflows/organize-original-assets.yml` — one-time original-asset migration workflow.
+- `.github/workflows/product-asset-preview.yml` — redundant review-only contact-sheet workflow; final product generation remains in `product-assets.yml`.
+
+Active asset workflows retained:
+- `.github/workflows/build.yml` — production verification.
+- `.github/workflows/asset-optimize.yml` — scoped Hero WebP conversion.
+- `.github/workflows/product-assets.yml` — reproducible final product-asset generation.
 
 The objective is code clarity and maintainability, **not visual redesign**.
 
@@ -315,7 +328,15 @@ When this document conflicts with actual production code:
 - Avoid changing approved visual direction while doing engineering work.
 - GitHub is the source of truth for website code and the organized website asset library.
 
-## 12. Change log note
+## 12. Phase 3 cleanup record
+
+- Legacy production components removed: `ClutchVisual.jsx`, `ProductVisual.jsx`, `Capability.jsx`.
+- Duplicate legacy brand path `public/images/brand/` retired; canonical path is `public/assets/brand/`.
+- Unused CSS rules removed: legacy logo image selectors and unused `.products-note`.
+- Historical/one-time GitHub Actions retired as listed above.
+- Final CI for the second-round cleanup must be treated as the acceptance gate before moving on.
+
+## 13. Change log note
 
 Major phase-completion decisions should be recorded here with:
 - date
