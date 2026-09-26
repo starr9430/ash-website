@@ -9,6 +9,6 @@ The ASH logo used on the packaging is the approved visual reference for the mast
 - `../../../assets/brand/ash-leaf.svg`
 - `../../../assets/brand/ash-water.svg`
 - `../../../assets/brand/ash-metal-ring.svg`
-- `../../../images/brand/leaf-vein.svg`
-- `../../../images/brand/water-ribbon.svg`
-- `../../../images/brand/mechanical-ring.svg`
+- `../../../assets/brand/leaf-vein.svg`
+- `../../../assets/brand/water-ribbon.svg`
+- `../../../assets/brand/mechanical-ring.svg`
