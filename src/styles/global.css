@@ -547,3 +547,97 @@ button,a{font:inherit}
   }
   .about-point:last-child{border-bottom:0}
 }
+
+/* MOBILE VISUAL REFINEMENT — desktop rules above remain unchanged */
+@media (max-width:760px){
+  .site-header{height:62px;padding:0 18px;grid-template-columns:auto minmax(0,1fr) auto;column-gap:12px}
+  .header-logo{display:flex;align-items:center;width:44px;min-width:44px}
+  .header-logo span{display:block;width:auto;height:auto}
+  .header-logo span::before{content:"ASH";display:block;color:#163a45;font-size:14px;line-height:1;font-weight:700;letter-spacing:.12em}
+  .site-header nav{display:flex;align-items:center;justify-content:center;gap:clamp(8px,2.2vw,13px);min-width:0;overflow:hidden}
+  .site-header nav a{flex:0 0 auto;font-size:8.5px;letter-spacing:.10em}
+  .site-header nav a.active:after{bottom:-7px}
+  .header-meta{justify-self:end;gap:0;font-size:8px}
+  .header-meta a:first-child,.header-meta>span{display:none}
+  .header-meta a:last-child{display:block;white-space:nowrap;font-size:8px}
+
+  .hero{min-height:620px;background:#f4f1e8}
+  .hero-scene{top:auto;bottom:0;height:61%;object-position:68% center}
+  .hero-copy{width:100%;min-height:335px;padding:34px 22px 0;justify-content:flex-start}
+  .hero-copy:before{width:100%;height:74%;background:linear-gradient(180deg,rgba(245,243,236,.97) 0%,rgba(245,243,236,.92) 48%,rgba(245,243,236,.62) 78%,rgba(245,243,236,0) 100%)}
+  .hero-product-name{margin-top:10px;font-size:9px;letter-spacing:.30em}
+  .hero-rule{width:42px;margin:14px 0 12px}
+  .hero-copy h1{font-size:clamp(48px,13.5vw,58px);line-height:.88;letter-spacing:-.055em}
+  .hero-description{margin-top:18px;max-width:245px;font-size:12px;line-height:1.62}
+  .hero-button{margin-top:18px;padding:12px 16px;gap:14px;font-size:12px}
+  .hero-button span{font-size:16px}
+
+  .feature-strip{grid-template-columns:1fr 1fr;padding:0 16px}
+  .feature-item{min-height:92px;gap:10px;padding:16px 10px}
+  .feature-item img{width:25px;height:25px;flex:0 0 25px}
+  .feature-item h3{margin-bottom:5px;font-size:9.5px;letter-spacing:.10em}
+  .feature-item p{max-width:145px;font-size:10px;line-height:1.5}
+
+  .products-section{grid-template-columns:1fr;gap:32px;padding:48px 18px 46px}
+  .products-intro{padding:0}
+  .products-title-row{display:block;margin-top:12px}
+  .products-title-row>span{display:block;width:44px;margin-top:0}
+  .products-title-row h2{margin-top:14px;font-size:34px;line-height:.98;letter-spacing:-.04em}
+  .products-copy{max-width:520px;margin-top:20px;font-size:13px;line-height:1.75}
+  .products-link{margin-top:20px;font-size:10.5px}
+  .product-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .product-card{padding-bottom:13px}
+  .product-image{height:178px}
+  .product-card h3{margin:12px 11px 0;font-size:11.5px;line-height:1.25}
+  .product-card p{margin:5px 11px 0;font-size:7.5px;letter-spacing:.08em}
+  .product-arrow{margin:9px 11px 0;font-size:15px}
+  .product-card--release .product-photo{width:70%;height:70%;transform:scale(1.55)}
+  .product-card--hydraulic .product-photo{width:100%;height:100%;transform:scale(1.34)}
+
+  .about-band{padding:28px 20px 0}
+  .about-logo{width:82px}
+  .about-main{padding:34px 0 30px}
+  .about-heading h2{font-size:clamp(34px,8.2vw,46px);line-height:.93;letter-spacing:-.055em}
+  .about-heading h2 .about-heading-gap{margin-top:20px}
+  .about-art{width:120%;margin:2px 0 -2px -12%}
+  .about-copy{padding:0;margin-top:6px}
+  .about-rule{width:44px;margin-bottom:20px}
+  .about-copy .about-lead{margin-bottom:18px;font-size:17px;line-height:1.58}
+  .about-copy p{font-size:13.5px;line-height:1.78}
+  .about-rail{padding:5px 0}
+  .about-point,.about-point:first-child,.about-point:last-child{min-height:58px;padding:11px 0;font-size:9.5px;letter-spacing:.14em}
+  .about-point-icon{flex-basis:25px;width:25px;height:25px}
+  .about-point-icon svg{width:25px;height:25px}
+
+  .contact-section{grid-template-columns:1fr;gap:38px;padding:68px 22px 72px}
+  .contact-section h2{margin-top:12px;font-size:clamp(48px,13vw,60px);line-height:.92}
+  .contact-side{max-width:330px;justify-self:start}
+  .contact-side p{margin-bottom:22px;font-size:12.5px;line-height:1.72}
+  .contact-side a{font-size:18px;padding-bottom:6px}
+
+  .site-footer{grid-template-columns:1fr;gap:18px;min-height:0;padding:30px 20px 34px}
+  .footer-brand{display:block}
+  .footer-brand-logo{display:block;width:auto;height:auto}
+  .footer-brand-logo::before{content:"ASH";display:block;font-size:13px;line-height:1;font-weight:700;letter-spacing:.12em}
+  .footer-brand span:last-child{display:block;margin-top:8px;font-size:8.5px;line-height:1.5}
+  .site-footer nav{justify-content:flex-start;flex-wrap:wrap;gap:8px 10px;font-size:8.5px;white-space:normal}
+  .site-footer nav i{display:none}
+  .footer-contact{display:flex;flex-direction:column;align-items:flex-start;gap:8px;justify-content:flex-start;white-space:normal;font-size:8.5px;line-height:1.5}
+  .footer-leaf{right:-24px;bottom:-62px;width:145px;opacity:.55}
+}
+@media (max-width:360px){
+  .site-header{padding:0 14px;column-gap:8px}
+  .site-header nav{gap:7px}
+  .site-header nav a{font-size:7.5px}
+  .header-logo{width:40px;min-width:40px}
+  .header-logo span::before{font-size:13px}
+  .hero{min-height:590px}
+  .hero-scene{height:59%;object-position:69% center}
+  .hero-copy{min-height:320px;padding-left:19px;padding-right:19px}
+  .hero-copy h1{font-size:46px}
+  .product-grid{gap:8px}
+  .product-image{height:164px}
+  .products-section{padding-left:16px;padding-right:16px}
+  .product-card h3{margin-left:9px;margin-right:9px;font-size:11px}
+  .product-card p,.product-arrow{margin-left:9px;margin-right:9px}
+}
