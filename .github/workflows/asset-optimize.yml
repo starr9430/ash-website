@@ -8,6 +8,10 @@ on:
       - '.github/workflows/asset-optimize.yml'
   workflow_dispatch:
 
+concurrency:
+  group: ash-asset-optimize
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
