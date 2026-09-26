@@ -1,0 +1,120 @@
+name: Optimize ASH Web Images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/assets/library/derived/ash-hero-scene-clean.png'
+      - 'public/assets/library/brand/ash-logo-approved.png'
+      - '.github/workflows/asset-optimize.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install image tools
+        run: python -m pip install pillow
+
+      - name: Build web-ready bitmap assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          jobs = [
+              (
+                  Path('public/assets/library/derived/ash-hero-scene-clean.png'),
+                  Path('public/assets/library/derived/ash-hero-scene-clean.webp'),
+                  90,
+              ),
+              (
+                  Path('public/assets/library/brand/ash-logo-approved.png'),
+                  Path('public/assets/library/brand/ash-logo-approved.webp'),
+                  95,
+              ),
+          ]
+
+          for src, dst, quality in jobs:
+              if not src.exists():
+                  raise SystemExit(f'Missing source asset: {src}')
+
+              with Image.open(src) as im:
+                  original_mode = im.mode
+                  original_size = im.size
+                  if src.suffix.lower() == '.png' and 'A' in im.getbands():
+                      out = im.convert('RGBA')
+                  else:
+                      out = im.convert('RGB')
+
+                  out.save(dst, 'WEBP', quality=quality, method=6)
+
+              web_size = dst.stat().st_size
+              source_size = src.stat().st_size
+              if out.size != original_size:
+                  raise SystemExit(f'Dimension changed unexpectedly: {src}')
+              if web_size >= source_size:
+                  raise SystemExit(
+                      f'WebP did not reduce size for {src}: '
+                      f'{source_size} -> {web_size} bytes'
+                  )
+
+              print(
+                  f'{src} | mode={original_mode} | dimensions={original_size} | '
+                  f'source={source_size} bytes | webp={web_size} bytes'
+              )
+          PY
+
+      - name: Switch production references to WebP
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              'src/sections/Hero.jsx': {
+                  '/assets/library/derived/ash-hero-scene-clean.png':
+                  '/assets/library/derived/ash-hero-scene-clean.webp',
+              },
+              'src/components/Header.jsx': {
+                  '/assets/library/brand/ash-logo-approved.png':
+                  '/assets/library/brand/ash-logo-approved.webp',
+              },
+              'src/components/Footer.jsx': {
+                  '/assets/library/brand/ash-logo-approved.png':
+                  '/assets/library/brand/ash-logo-approved.webp',
+              },
+              'src/sections/Intro.jsx': {
+                  '/assets/library/brand/ash-logo-approved.png':
+                  '/assets/library/brand/ash-logo-approved.webp',
+              },
+          }
+
+          for filename, pairs in replacements.items():
+              path = Path(filename)
+              text = path.read_text(encoding='utf-8')
+              for old, new in pairs.items():
+                  if old not in text:
+                      raise SystemExit(f'Expected reference not found: {old} in {filename}')
+                  text = text.replace(old, new)
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit optimized assets and references
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add             public/assets/library/derived/ash-hero-scene-clean.webp             public/assets/library/brand/ash-logo-approved.webp             src/sections/Hero.jsx             src/components/Header.jsx             src/components/Footer.jsx             src/sections/Intro.jsx
+          if git diff --cached --quiet; then
+            echo 'No changes'
+            exit 0
+          fi
+          git commit -m 'Convert active bitmap assets to WebP'
+          git push origin HEAD:main
