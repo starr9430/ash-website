@@ -2,11 +2,7 @@ function Intro() {
   return (
     <section className="about-band" id="about">
       <div className="about-top">
-        <img
-          className="about-logo"
-          src="/assets/library/brand/ash-logo-approved.png"
-          alt="ASH"
-        />
+        <span className="about-logo" aria-hidden="true" />
       </div>
 
       <div className="about-main">
