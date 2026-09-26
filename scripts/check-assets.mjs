@@ -90,3 +90,11 @@ if (pngs.length) {
   console.log('[assets] INFO: PNG references remain in production source:')
   for (const png of pngs) console.log('[assets]   /' + png)
 }
+
+const retiredLogo = 'assets/library/brand/ash-logo-approved.png'
+const retiredLogoPath = path.join(publicRoot, retiredLogo)
+if (fs.existsSync(retiredLogoPath)) {
+  fail('Retired damaged logo asset still exists: /' + retiredLogo)
+} else {
+  console.log('[assets] PASS: retired damaged logo asset is absent.')
+}
