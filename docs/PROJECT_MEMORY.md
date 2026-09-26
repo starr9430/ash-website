@@ -222,7 +222,7 @@ Second-round cleanup also reviewed historical CSS, image-processing scripts, and
 
 Retired workflows:
 - `.github/workflows/about-us-asset.yml` — historical About Us asset generator; retired because the current prepared artwork is the accepted production source and this workflow could overwrite it from an older sketch.
-- `.github/workflows/extract-design-assets.yml` — one-time design-reference extraction/migration workflow.
+- `.github/workflows/extract-design-assets.yml` — **retained as a manual-only historical utility**; implementation lives in `tools/historical/extract-design-assets.py` and is not part of normal CI/deployment.
 - `.github/workflows/organize-original-assets.yml` — one-time original-asset migration workflow.
 - `.github/workflows/product-asset-preview.yml` — redundant review-only contact-sheet workflow; final product generation remains in `product-assets.yml`.
 
@@ -333,7 +333,7 @@ When this document conflicts with actual production code:
 - Legacy production components removed: `ClutchVisual.jsx`, `ProductVisual.jsx`, `Capability.jsx`.
 - Duplicate legacy brand path `public/images/brand/` retired; canonical path is `public/assets/brand/`.
 - Unused CSS rules removed: legacy logo image selectors and unused `.products-note`.
-- Historical/one-time GitHub Actions retired as listed above.
+- Historical/one-time GitHub Actions were reviewed. Design extraction was intentionally retained as a dormant manual utility because future pages may reuse the historical reference-extraction workflow. Its implementation is isolated under `tools/historical/`.
 - Final CI for the second-round cleanup must be treated as the acceptance gate before moving on.
 
 ## 13. Change log note
