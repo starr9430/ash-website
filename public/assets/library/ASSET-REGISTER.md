@@ -1,44 +1,93 @@
 # ASH Asset Register
 
-Last updated: 2026-09-22
+Last updated: 2026-09-26
 
-This register is the handoff map between the historical ASH source files already available in ChatGPT and the permanent GitHub website asset library.
+This register maps the website's original sources, derived production assets, and reusable brand resources.
 
-## Brand
-| Planned path | Source / status | Use |
-|---|---|---|
-| `public/assets/library/brand/ash-logo-approved.png` | **Binary stored in GitHub main**; approved packaging-derived ASH mark recovered from prior work | Master web mark |
-| `public/assets/brand/ash-leaf.svg` | Existing repository asset | Brand motif |
-| `public/assets/brand/ash-water.svg` | Existing repository asset | Brand motif |
-| `public/assets/brand/ash-metal-ring.svg` | Existing repository asset | Brand motif |
+## Production brand resources
+
+All reusable website brand SVGs use the canonical path:
+
+`public/assets/brand/`
+
+Current files include:
+
+- `ash-leaf.svg`
+- `ash-water.svg`
+- `ash-metal-ring.svg`
+- `footer-leaf.svg`
+- `leaf-vein.svg`
+- `water-ribbon.svg`
+- `mechanical-ring.svg`
+- `icon-reliability.svg`
+- `icon-materials.svg`
+- `icon-coverage.svg`
+- `icon-supply.svg`
+
+The former duplicate `public/images/brand/` path has been retired. New production code must use `/assets/brand/...`.
+
+## Logo
+
+The historical packaging-derived standalone file `ash-logo-approved.png` was retired after it was found to be damaged/incomplete.
+
+The packaging-derived artwork remains a visual reference; it is not a current production asset path.
+
+Do not reintroduce the retired PNG merely to provide layout spacing or a logo placeholder.
 
 ## Real product imagery
-| Planned path | Source / status | Use |
-|---|---|---|
-| `public/assets/library/products/clutch-cover-01.jpg` | Recovered from prior uploaded high-resolution product material; **binary transfer pending** | Pressure plate / cover |
-| `public/assets/library/products/clutch-disc-01.png` | Recovered from prior uploaded high-resolution product material; **binary transfer pending** | Driven disc |
-| `public/assets/library/products/clutch-cover-and-disc-reference.png` | Recovered composite reference; **binary transfer pending** | Product relationship / art direction |
-| `public/assets/library/products/release-bearing-01.*` | Source previously discussed; **binary transfer pending** | Release bearing |
-| `public/assets/library/products/hero-clutch-01.*` | Source previously discussed; **binary transfer pending** | Hero |
+
+### Original sources
+
+`public/assets/library/originals/products/`
+
+Original product photography remains here and is the source material for future derivatives.
+
+### Production derivatives
+
+`public/assets/library/derived/products/`
+
+Current live Product System assets:
+
+- `clutch-cover-editorial.webp`
+- `clutch-disc-editorial.webp`
+- `release-bearing-editorial.webp`
+- `hydraulic-bearing-editorial.webp`
+
+A pilot / guide bearing source exists in the original library but is not currently part of the live Product System.
+
+## About Us
+
+Original visual references:
+
+`public/assets/library/originals/website-reference/`
+
+Current production derivative:
+
+`public/assets/library/derived/about/ash-about-mark.webp`
+
+## Hero
+
+Current production image:
+
+`public/assets/library/derived/ash-hero-scene-clean.webp`
+
+The original PNG remains a source/working asset; the live site uses the WebP derivative.
 
 ## Packaging
-| Planned path | Source / status | Use |
-|---|---|---|
-| `public/assets/library/packaging/ash-clutch-kit-box-01.png` | Recovered from prior packaging design material; **binary transfer pending** | Packaging hero |
-| `public/assets/library/packaging/ash-packaging-design-board.png` | Recovered reference board; **binary transfer pending** | Packaging system reference |
 
-## Reference
-| Planned path | Source / status | Use |
-|---|---|---|
-| `public/assets/library/reference/ash-homepage-art-direction-reference.png` | Recovered from prior work; **binary transfer pending** | Homepage art direction |
-| `public/assets/library/reference/ash-brand-visual-system-board.png` | Recovered from prior work; **binary transfer pending** | Brand system reference |
+Packaging source material lives under:
 
-## Working rule
+`public/assets/library/originals/packaging/`
 
-Real ASH photography takes precedence over generated or illustrative substitutes. Reference boards guide composition and visual language; they are not production assets.
+Web-ready packaging assets live under:
 
-The approved packaging-derived ASH mark is the logo reference. Do not redesign the mark merely because a standalone vector master is not yet available.
+`public/assets/library/packaging/`
 
-## Binary transfer note
+## Working rules
 
-The recovered historical source files remain available in the working asset cache. GitHub binary objects are being added through the Git data API rather than the text contents API, so binary files must be committed as blobs and then attached to the asset tree. The first verified binary asset is the approved ASH logo above.
+1. Real ASH photography takes precedence over generated or illustrative substitutes.
+2. Original source material stays in `library/originals/`.
+3. Web-ready derivatives belong in `library/derived/` or the dedicated production library where already established.
+4. Reusable brand SVGs belong in `public/assets/brand/`.
+5. Do not create a second production brand path.
+6. Reference boards are references, not production imagery.
