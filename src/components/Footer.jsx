@@ -12,7 +12,7 @@ function Footer() {
         <a href="mailto:starr@ashlira.com">✉ &nbsp; starr@ashlira.com</a>
         <span>© 2026 ASHLIRA. All rights reserved.</span>
       </div>
-      <img className="footer-leaf" src="/images/brand/footer-leaf.svg" alt="" />
+      <img className="footer-leaf" src="/assets/brand/footer-leaf.svg" alt="" />
     </footer>
   )
 }
