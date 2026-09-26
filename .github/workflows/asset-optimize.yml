@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ash-asset-optimize
+  group: ash-asset-writes
   cancel-in-progress: false
 
 permissions:
@@ -43,7 +43,10 @@ jobs:
 
           for src, dst, quality in jobs:
               if not src.exists():
-                  raise SystemExit(f'Missing source asset: {src}')
+                  if dst.exists():
+                      print(f'Source already absent and WebP exists; treating {src} as already optimized.')
+                      continue
+                  raise SystemExit(f'Missing source asset and WebP output: {src}')
 
               with Image.open(src) as im:
                   original_mode = im.mode
@@ -76,21 +79,18 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          replacements = {
-              'src/sections/Hero.jsx': {
-                  '/assets/library/derived/ash-hero-scene-clean.png':
-                  '/assets/library/derived/ash-hero-scene-clean.webp',
-              },
-          }
+          path = Path('src/sections/Hero.jsx')
+          text = path.read_text(encoding='utf-8')
+          png = '/assets/library/derived/ash-hero-scene-clean.png'
+          webp = '/assets/library/derived/ash-hero-scene-clean.webp'
 
-          for filename, pairs in replacements.items():
-              path = Path(filename)
-              text = path.read_text(encoding='utf-8')
-              for old, new in pairs.items():
-                  if old not in text:
-                      raise SystemExit(f'Expected reference not found: {old} in {filename}')
-                  text = text.replace(old, new)
-              path.write_text(text, encoding='utf-8')
+          if png in text:
+              path.write_text(text.replace(png, webp), encoding='utf-8')
+              print('Switched Hero reference from PNG to WebP.')
+          elif webp in text:
+              print('Hero already references WebP; no reference change needed.')
+          else:
+              raise SystemExit('Hero contains neither the expected PNG nor WebP reference.')
           PY
 
       - name: Commit optimized assets and references
